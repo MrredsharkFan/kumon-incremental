@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 
-<html>
-    <script defer src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/remove-focus-outline@1.2.1/outline.min.js"></script>
 
+<style>
+    @font-face{
+        font-family: 'MonospaceTypewriter';
+        src: url(MonospaceTypewriter.ttf) format("truetype");
+    }
+
+    * {
+        font-family: MonospaceTypewriter;
+    }
+</style>
+
+<html>
+    <div id="app">
+        
+        <progress id="prog" style="width: 100%" value="0" max="100"></progress>
+        Current exercise: {{get_level_text(level)}} <i style="font-size: 75%">({{get_level_name(level)}}) / {{(level/45.9).toFixed(3)}}% finished</i>
+        <hr>
+        <span style="display: block; width: 100%; text-align: center;">You have {{format(player.points)}} skill.</span><br>
+        <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost: Nothing</button>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="kumon_data.js"></script>
+    
     <script src="essential.js"></script>
     <script src="eternity.js"></script>
     <script src="format.js"></script>
     <script src="save.js"></script>
     <script src="game.js"></script>
     <script defer src="v.js"></script>
-    <div id="app">
-        {{player}}
-    </div>
 </html>

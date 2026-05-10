@@ -14,10 +14,49 @@
 
 
 
+function get_level_pt_req(x) {
+    var t = new Decimal(x)
+    if (x < 0){return new Decimal(-1)}
+    if (x < 200) {
+        return t.div(50).add(1).pow(new Decimal(3).add(x/100)).add(t.div(10).add(1).pow(2).sub(1).times(4))
+    }
+    else {return new Decimal(Infinity)}
+}
 
+function get_cur_level(x) {
+    var x = new Decimal(x)
+    var o_level = 4590
+    var step = 4096
+    while (step!=0.5) {
+        if (x.lte(get_level_pt_req(o_level-step))) {
+            o_level = o_level-step
+        }
+        step = step / 2
+    }
+    return o_level
+}
+
+function percent(x,l) {
+    var L1 = get_level_pt_req(l - 1)
+    var L2 = get_level_pt_req(l)
+    return x.sub(L1).div(L1.sub(L2)).times(100)
+}
+
+for (var i = 0; i < 200; i++){
+    console.log(i,get_level_pt_req(i))
+}
+
+var level = 0
+
+function skill_gain() {
+    return player.points
+}
 
 function update(dt) {
+    level = get_cur_level(player.skill)
+    document.getElementById("prog").value = Number(percent(player.skill,level).times(-1))
     //the player, dt = delta time    
+    player.skill = player.skill.add(skill_gain().times(dt))
 }
 
 ct = Date.now()
@@ -25,7 +64,7 @@ let loop = setInterval(function () {
 
     var t = Date.now() - ct
     ct = Date.now()
-    update(typeof (t) == "undefined" ? 0 : t)
+    update(typeof (t) == "undefined" ? 0 : t/1000)
 
     
-},1)
+})
