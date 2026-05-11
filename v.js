@@ -19,7 +19,9 @@ function loadVue() {
                 console,
                 percent,
                 skill_gain,
-                upgrade_effects
+                upgrade_effects,
+                Math,
+                Date
             }
         }
     }

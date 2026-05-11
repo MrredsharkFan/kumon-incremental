@@ -28,7 +28,8 @@ upgrade_set(2, 33, "Trained handwriting I","Writing speed *2 again")
 upgrade_set(3, 67, "Motivation","Exercises are done quickerbased on your current progress on it.",
     function () { return new Decimal(percent(player.skill, level)).times(-1).div(100).add(2).pow(2) })
 upgrade_set(4, 150, "Recognition","Writing speed *2")
-upgrade_set(5, 200, "Let's count!","Unlocks a new feature.")
+upgrade_set(5, 200, "Let's count!", "Unlocks a new feature.")
+upgrade_set(6, 4659, "I wonder what this is.", "Beat the game, and never come back.")
 
 
 

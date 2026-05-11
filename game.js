@@ -30,7 +30,7 @@ function get_level_pt_req(x) {
 
 function get_cur_level(x) {
     var x = new Decimal(x)
-    var o_level = 4590
+    var o_level = 4660
     var step = 4096
     while (step != 0.5) {
         if (x.lte(get_level_pt_req(o_level - step))) {
@@ -63,6 +63,7 @@ function skill_gain() {
 }
 
 function update(dt) {
+    player.t = player.t+1
     level = get_cur_level(player.skill)
     if (typeof app !== "undefined" && app) { //note: so i dont need the "()" in typeof huh
         app.level = level

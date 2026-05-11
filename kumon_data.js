@@ -456,16 +456,24 @@ Probability Density Function
 Standard Normal Distribution I
 Standard Normal Distribution II
 Sampling
-Hypothesis Testing`.split("\n")
+Hypothesis Testing
+Set notation<i style="font-size: 75%">You thought this was the end?</i>
+Truth Table<i style="font-size: 75%">Introducing: Kumon Acadamy</i>
+Logical operators
+Proofs concerning logical operators I
+Proofs concerning logical operators II
+Cardinality, Aleph, and various number sets
+Reductio ad absurdum and various proof techinques`
+    .split("\n")
 
-const kumon_level_diff = [1,[10],2,[10],23,[14],24,[9],25,[9],26,[7]]
+const kumon_level_diff = [1,[10],2,[10],23,[14],24,[9],25,[9],26,[7],27,[7]]
 
-const kumon_level_name = `ZII/ZI/6A/5A/4A/3A/2A/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/XV/XM/XP/XS`.split("/")
+const kumon_level_name = `ZII/.ZI/.6A/.5A/.4A/.3A/.2A/.A/.B/.C/.D/.E/.F/.G/.H/.I/.J/.K/.L/.M/.N/.O/.XV/.XM/.XP/.XS/.XX`.split("/.")
 
 function get_level_text(lvl) {
     var c = lvl
     var n = 0
-    while (n!=26) {
+    while (n!=27) {
         if (kumon_level_diff.indexOf(n + 1) != -1) { var d = Number(kumon_level_diff[kumon_level_diff.indexOf(n+1) + 1]) } else { var d = 20 };
         d = d*10
         if (c <= d-1) {

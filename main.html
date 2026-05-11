@@ -13,7 +13,7 @@
 </style>
 
 <html>
-<div id="app" @click="console.log('fuck!')">
+<div id="app">
 
     <progress id="prog" style="width: 100%" value="0" max="100"></progress>
     <span style="text-align: center; display: block; width: 100%">{{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}}<br>{{get_level_name(level)}} #{{level%10+1}}
