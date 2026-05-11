@@ -1,6 +1,5 @@
 
 
-
 function loadVue() {
     app = new Vue({
         el: "#app",
@@ -17,15 +16,16 @@ function loadVue() {
                 kumon_level_name,
                 kumon_data,
                 Decimal,
+                console,
+                percent,
+                skill_gain,
+                upgrade_effects
             }
         }
     }
     )
+    
 }
 
 loadVue()
 
-function force() {
-    app["$data"].player = player
-    app["$data"].level = level
-}

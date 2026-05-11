@@ -2,7 +2,7 @@
 
 
 <style>
-    @font-face{
+    @font-face {
         font-family: 'MonospaceTypewriter';
         src: url(MonospaceTypewriter.ttf) format("truetype");
     }
@@ -13,22 +13,28 @@
 </style>
 
 <html>
-    <div id="app">
-        
-        <progress id="prog" style="width: 100%" value="0" max="100"></progress>
-        Current exercise: {{get_level_text(level)}} <i style="font-size: 75%">({{get_level_name(level)}}) / {{(level/45.9).toFixed(3)}}% finished</i>
-        <hr>
-        <span style="display: block; width: 100%; text-align: center;">You have {{format(player.points)}} skill.</span><br>
-        <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost: Nothing</button>
+<div id="app" @click="console.log('fuck!')">
 
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="kumon_data.js"></script>
-    
-    <script src="essential.js"></script>
-    <script src="eternity.js"></script>
-    <script src="format.js"></script>
-    <script src="save.js"></script>
-    <script src="game.js"></script>
-    <script defer src="v.js"></script>
+    <progress id="prog" style="width: 100%" value="0" max="100"></progress>
+    <span style="text-align: center; display: block; width: 100%">{{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}}<br>{{get_level_name(level)}} #{{level%10+1}}
+        <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
+    <hr>
+    <span style="display: block; width: 100%; text-align: center;">Data: {{format(player.skill)}}<br>{{format(skill_gain())}}/s</span><br>
+    <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
+        Nothing</button>
+    <hr>
+    <div id="upg" style="width: 100%; height: 60%; position: fixed; top: 260px"></div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="kumon_data.js"></script>
+
+<script src="essential.js"></script>
+<script src="eternity.js"></script>
+<script src="format.js"></script>
+<script src="save.js"></script>
+<script src="game.js"></script>
+<script src="general_upgrades.js"></script>
+<script defer src="v.js"></script>
+
 </html>

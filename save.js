@@ -4,7 +4,9 @@
             version: "2.a.0",
             points: new Decimal(0),
             skill: new Decimal(0),
-            level: 0
+            level: 0,
+            upgrades: [],
+            tab: "Main"
         }
     }
 
@@ -16,7 +18,7 @@
 
     const player_vars_d = ["points", "skill"]
     const player_vars_l = []
-    const player_vars_str = ["level"]
+    const player_vars_str = ["level","upgrades","tab"]
 
     function detectNaN() {
         for (var i in player_vars_d) {
