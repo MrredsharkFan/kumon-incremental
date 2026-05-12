@@ -65,6 +65,7 @@ function skill_gain() {
     if (hasUpgrade(2)) { g = g.times(2) }
     if (hasUpgrade(3)) { g = g.times(upgrade_effects[3]()) }
     if (hasUpgrade(4)) { g = g.times(2) }
+    if (hasUpgrade(5)) { g = g.times(4) }
     g = g.times(get_num_effect())
     if (hasUpgrade(9)) { g = g.times(upgrade_effect(9)) }
     return g

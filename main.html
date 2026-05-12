@@ -16,7 +16,7 @@
 <div id="app">
     <div style="display: inline-flex; background-image: url(logo.svg); background-repeat: no-repeat; width: 205px; height: 50px"></div> Incremental
     <progress id="prog" style="width: 100%" value="0" max="100"></progress>
-    <span style="text-align: center; display: block; width: 100%">{{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}}<br>{{get_level_name(level)}} #{{level%10+1}}
+    <span style="text-align: center; display: block; width: 100%">{{get_level_name(level)}} #{{level%10+1}} <small>({{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}})</small>
         <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
     <hr>
     <span style="display: block; width: 100%; text-align: center;">

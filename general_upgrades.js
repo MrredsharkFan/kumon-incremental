@@ -28,9 +28,9 @@ upgrade_set(2, 33, "Think","Data *2")
 upgrade_set(3, 67, "Motivation","Exercises are done quicker based on your current progress on it.",
     function () { return new Decimal(percent(player.skill, level)).times(-1).div(100).add(2).pow(2).pow(hasUpgrade(7)?upgrade_effects[7]():1) })
 upgrade_set(4, 150, "Repitition","Data *2")
-upgrade_set(5, 200, "Let's count!", "Unlocks a new feature.")
-upgrade_set(6, 220, "This is an index finger!", "*2 counting speed.")
-upgrade_set(7, 240, "Candies!", "<b>Motivation</b> is stronger based on current exercise.",
+upgrade_set(5, 200, "Let's count!", "Unlocks a new feature, also *4 Data.")
+upgrade_set(6, 250, "This is an index finger!", "*2 counting speed.")
+upgrade_set(7, 300, "Candies!", "<b>Motivation</b> is stronger based on current exercise.",
     function(){return new Decimal(level).sub(200).max(0).div(200).add(1).pow(0.75)}
 )
 upgrade_set(8, 400, "I can count faster!", "*2.5 counting speed.")
