@@ -23,15 +23,34 @@ function buy_upgrade(id) {
     }
 }
 
-upgrade_set(1, 10, "Better pen","Writing speed *2")
-upgrade_set(2, 33, "Trained handwriting I","Writing speed *2 again")
-upgrade_set(3, 67, "Motivation","Exercises are done quickerbased on your current progress on it.",
-    function () { return new Decimal(percent(player.skill, level)).times(-1).div(100).add(2).pow(2) })
-upgrade_set(4, 150, "Recognition","Writing speed *2")
+upgrade_set(1, 10, "Grasp","Data *2")
+upgrade_set(2, 33, "Think","Data *2")
+upgrade_set(3, 67, "Motivation","Exercises are done quicker based on your current progress on it.",
+    function () { return new Decimal(percent(player.skill, level)).times(-1).div(100).add(2).pow(2).pow(hasUpgrade(7)?upgrade_effects[7]():1) })
+upgrade_set(4, 150, "Repitition","Data *2")
 upgrade_set(5, 200, "Let's count!", "Unlocks a new feature.")
-upgrade_set(6, 4659, "I wonder what this is.", "Beat the game, and never come back.")
+upgrade_set(6, 220, "This is an index finger!", "*2 counting speed.")
+upgrade_set(7, 240, "Candies!", "<b>Motivation</b> is stronger based on current exercise.",
+    function(){return new Decimal(level).sub(200).max(0).div(200).add(1).pow(0.75)}
+)
+upgrade_set(8, 400, "I can count faster!", "*2.5 counting speed.")
+upgrade_set(9, 450, "I can see my progress.", "Data gain is boosted by current exercise #.",
+    function(){return new Decimal(level).sub(400).max(0).pow_base(1.01)}
+)
+upgrade_set(10, 500, "Practise makes perfect.", "Counting speed is boosted based on number.",
+    function(){return player.number.div(2).add(1).pow(0.5)}
+)
+upgrade_set(14, 4659, "I wonder what this is.", "Beat the game, and never come back.")
 
 
 
 
 const upgrade_costs_real = upgrade_costs
+
+function hasUpgrade(x) {
+    return player.upgrades.indexOf(x)!=-1
+}
+
+function upgrade_effect(x) {
+    return upgrade_effects[x]()
+}

@@ -21,7 +21,11 @@ function loadVue() {
                 skill_gain,
                 upgrade_effects,
                 Math,
-                Date
+                Date,
+                get_num_chance,
+                get_num_effect,
+                roll_number,
+                hasUpgrade
             }
         }
     }

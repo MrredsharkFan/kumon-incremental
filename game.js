@@ -21,7 +21,13 @@ function get_level_pt_req(x) {
         return t.div(50).add(1).pow(new Decimal(3).add(x / 100)).add(t.div(10).add(1).pow(2).sub(1).times(4))
     }
     else if (x < 400) {
-        return get_level_pt_req(199).pow(t.sub(200).div(200).add(1)).times(t.sub(200).div(200).pow(2.25).add(1))
+        return get_level_pt_req(199).pow(t.sub(199).div(200).add(1)).times(t.sub(199).div(200).pow(2.25).add(1))
+    }
+    else if (x < 600) {
+        return get_level_pt_req(399).pow(t.sub(399).div(300).add(1)).times(t.sub(399).div(200).pow(3).add(1))
+    }
+    else if (x < 800) {
+        return get_level_pt_req(599).pow(t.sub(599).div(250).add(1).pow(1.2)).times(t.sub(599).div(200).pow(4).add(1))
     }
     else {
         return new Decimal(Infinity)
@@ -47,7 +53,7 @@ function percent(x=player.skill, l=level) {
     return x.sub(L1).div(L1.sub(L2)).times(100)
 }
 
-for (var i = 200; i < 400; i++) {
+for (var i = 200; i < 800; i++) {
     console.log(i, format(get_level_pt_req(i)))
 }
 
@@ -55,10 +61,12 @@ level = 0
 
 function skill_gain() {
     var g = player.points
-    if (player.upgrades.indexOf(1)!=-1){g = g.times(2)}
-    if (player.upgrades.indexOf(2) != -1) { g = g.times(2) }
-    if (player.upgrades.indexOf(3) != -1) { g = g.times(upgrade_effects[3]()) }
-    if (player.upgrades.indexOf(4) != -1) { g = g.times(2) }
+    if (hasUpgrade(1)){g = g.times(2)}
+    if (hasUpgrade(2)) { g = g.times(2) }
+    if (hasUpgrade(3)) { g = g.times(upgrade_effects[3]()) }
+    if (hasUpgrade(4)) { g = g.times(2) }
+    g = g.times(get_num_effect())
+    if (hasUpgrade(9)) { g = g.times(upgrade_effect(9)) }
     return g
 }
 
