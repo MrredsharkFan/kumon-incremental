@@ -25,7 +25,11 @@ function loadVue() {
                 get_num_chance,
                 get_num_effect,
                 roll_number,
-                hasUpgrade
+                hasUpgrade,
+                upgrade_costs_real,
+                get_buyable_cost,
+                buy_buyable,
+                get_write_effect
             }
         }
     }

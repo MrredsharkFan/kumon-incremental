@@ -1,12 +1,21 @@
 function get_num_chance(L=level) {
-    return Math.max(0,1-0.994**(L-200))
+    var t = 1 - Math.max(0, 1 - 0.994 ** (L - 200))
+    if (hasUpgrade(12)){t = t/(upgrade_effect(12).toNumber())}
+    return 1-t
 }
 
 function get_num_effect(n=player.number) {
     var e = player.number.add(1).pow(0.75).sub(1).pow_base(9)
-    if (e.gte(1e7)){
-        e = e.pow(1/7).times(1e6)
+    var s = new Decimal(1e7)
+    if (hasUpgrade(14)) { s = s.times(upgrade_effect(14)) }
+    if (e.gte(s)){
+        e = e.pow(1/7).times(s.pow(6/7))
     }
+    return e
+}
+
+function get_write_effect(n = player.write) {
+    var e = n.add(1).pow(0.8).sub(1).pow_base(2)
     return e
 }
 

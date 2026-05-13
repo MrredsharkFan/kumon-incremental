@@ -26,26 +26,35 @@
         Nothing</button>
     <hr>
     <div id="upg" v-if="player.tab=='main'" style="width: 100%; height: 60%; position: fixed; top: 310px"></div>
+
     <div v-if="player.tab=='num'" style="left: 1%;width: 98%; height: 60%; position: fixed; top: 310px; text-align: center;">
         Your current number counted is {{format(player.number)}}. ({{(get_num_chance()*100).toFixed(3)}}% for successful count)<br>
-        x{{format(get_num_effect())}} skill
+        x{{format(get_num_effect())}} data<br>
         <button style="width: 20%" onclick="roll_number()">Count! Cooldown: {{((Math.max(0,player.nn-Date.now()))/1000).toFixed(3)}}s</button>
+        <div v-if="hasUpgrade(11)">
+           <br><hr>
+            You have written {{format(player.write)}} numbers.<br>
+            x {{format(get_write_effect())}} data.<br>
+            <button style="width: 20%" onclick="buy_buyable('write',player.write)">Learn how to write the next number.<br>Cost: {{format(get_buyable_cost("write",player.write))}} data</button>
+        </div>
     </div>
+
     <div id="tab_section" style="position: fixed; left: 2%; width: 96%; height: 10%; top: 89%; background-color: #00000080">
         <button onclick="player.tab = 'main'">Main</button>
-        <button v-if="hasUpgrade(1)" onclick="player.tab = 'num'">Number</button>
+        <button v-if="hasUpgrade(5)" onclick="player.tab = 'num'">Number</button>
     </div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="kumon_data.js"></script>
+<script src="baseline/kumon_data.js"></script>
 
-<script src="essential.js"></script>
-<script src="eternity.js"></script>
+<script src="baseline/essential.js"></script>
+<script src="baseline/eternity.js"></script>
+<script src="baseline/format.js"></script>
 <script src="general_upgrades.js"></script>
-<script src="format.js"></script>
 <script src="num.js"></script>
 <script src="save.js"></script>
+<script src="buyable_control.js"></script>
 <script src="game.js"></script>
 <script defer src="v.js"></script>
 

@@ -57,7 +57,7 @@ function hex(num) {
 }
 
 function format(num, prec = 2, small = true, no = "S:1e3003", comma = 6) {
-    if (num.gte(Decimal.tetrate(10,1e308,10))){return "Infinty"}
+    if (num.layer>1e308){return "Infinty"}
     if (no[0] == "S") { var lim = no.split(":")[1] }
     else { var lim = new Decimal(0) }
     var num = new Decimal(num)

@@ -1,19 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function get_level_pt_req(x) {
     var t = new Decimal(x)
     if (x < 0) { return new Decimal(-1) }
@@ -26,7 +10,7 @@ function get_level_pt_req(x) {
     else if (x < 600) {
         return get_level_pt_req(399).pow(t.sub(399).div(300).add(1)).times(t.sub(399).div(200).pow(3).add(1))
     }
-    else if (x < 800) {
+    else if (x < 870) {
         return get_level_pt_req(599).pow(t.sub(599).div(250).add(1).pow(1.2)).times(t.sub(599).div(200).pow(4).add(1))
     }
     else {
@@ -53,7 +37,7 @@ function percent(x=player.skill, l=level) {
     return x.sub(L1).div(L1.sub(L2)).times(100)
 }
 
-for (var i = 200; i < 800; i++) {
+for (var i = 800; i < 870; i++) {
     console.log(i, format(get_level_pt_req(i)))
 }
 
@@ -68,6 +52,7 @@ function skill_gain() {
     if (hasUpgrade(5)) { g = g.times(4) }
     g = g.times(get_num_effect())
     if (hasUpgrade(9)) { g = g.times(upgrade_effect(9)) }
+    g = g.times(get_write_effect())
     return g
 }
 

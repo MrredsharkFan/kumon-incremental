@@ -10,7 +10,8 @@
             t: 0,
             number: new Decimal(0),
             tab: "main",
-            nn: Date.now()+1e4
+            nn: Date.now() + 1e4,
+            write: new Decimal(0)
         }
     }
 
@@ -20,7 +21,7 @@
 
     player = initPlayer()
 
-    const player_vars_d = ["points", "skill", "number"]
+    const player_vars_d = ["points", "skill", "number","write"]
     const player_vars_l = []
     const player_vars_str = ["level","upgrades","tab","t","nn"]
 
