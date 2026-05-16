@@ -14,7 +14,8 @@
             write: new Decimal(0),
             upage: 0,
             max_sum: new Decimal(0),
-            sums: [new Decimal(0),new Decimal(0)]
+            sums: [new Decimal(0), new Decimal(0)],
+            best_number: new Decimal(0) //embarressing that i put this this late into the list...
         }
     }
 
@@ -24,7 +25,7 @@
 
     player = initPlayer()
 
-    const player_vars_d = ["points", "skill", "number","write"]
+    const player_vars_d = ["points", "skill", "number","write","best_number"]
     const player_vars_l = ["sums"]
     const player_vars_str = ["level","upgrades","tab","t","nn","upage"]
 

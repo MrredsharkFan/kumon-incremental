@@ -19,7 +19,7 @@
 
 <html>
 <div id="app">
-    <div style="display: inline-flex; background-image: url(logo.svg); background-repeat: no-repeat; width: 205px; height: 50px"></div> Incremental
+    <a href="https://www.kumon.com/" style="display: inline-flex; background-image: url(logo.svg); background-repeat: no-repeat; width: 205px; height: 50px"></a> Incremental
     <progress id="prog" style="width: 100%" value="0" max="100"></progress>
     <span style="text-align: center; display: block; width: 100%">{{get_level_name(level)}} #{{level%10+1}} <small>({{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}})</small>
         <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
@@ -37,10 +37,10 @@
     <div id="upg" v-if="player.tab=='main'" class="tab_thing"></div>
 
     <div v-if="player.tab=='num'" class="tab_thing">
-        Your current number counted is {{format(player.number)}}. ({{(get_num_chance()*100).toFixed(3)}}% for successful count)<br>
+        Current counted number: {{format(player.number)}} <small>(Best: {{format(player.best_number)}})</small> ({{(get_num_chance()*100).toFixed(3)}}% for successful count)<br>
         x{{format(get_num_effect())}} data<br>
         <button style="width: 20%" onclick="roll_number()">Count! Cooldown: {{((Math.max(0,player.nn-Date.now()))/1000).toFixed(3)}}s</button>
-        <div v-if="hasUpgrade(11)">
+        <div v-if="hasUpgrade(16)">
            <br><hr>
             You have written {{format(player.write)}} numbers.<br>
             x {{format(get_write_effect())}} data.<br>
@@ -61,6 +61,10 @@
         Count {{format(add_second_effect())}} at once
         
         
+    </div>
+
+    <div v-if="player.tab=='set'">
+        <button onclick="import_player()">HARD RESET</button>
     </div>
     <div id="tab_section" style="position: fixed; left: 2%; width: 96%; height: 10%; top: 89%; background-color: #00000080"></div>
 

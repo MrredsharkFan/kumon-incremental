@@ -1,8 +1,8 @@
 function get_buyable_cost(name,amt) {
     if (name == "write") {
         var s = new Decimal(1)
-        if (hasUpgrade(13)) { s = s.times(upgrade_effect(13)) }
-        if (hasUpgrade(15)) { s = s.times(upgrade_effect(15)) }
+        if (hasUpgrade(18)) { s = s.times(upgrade_effect(18)) }
+        if (hasUpgrade(20)) { s = s.times(upgrade_effect(20)) }
         if (amt.gte(30)) {
             amt = amt.times(amt.div(30))
         }

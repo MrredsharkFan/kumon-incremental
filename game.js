@@ -16,6 +16,9 @@ function get_level_pt_req(x) {
     else if (x < 1000) {
         return new Decimal(1e36).pow(t.sub(870).div(130).add(1))
     }
+    else if (x < 1200) {
+        return new Decimal(1e75).pow(t.sub(1000).div(200).add(1))
+    }
     else {
         return new Decimal(Infinity)
     }
