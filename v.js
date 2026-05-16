@@ -29,7 +29,10 @@ function loadVue() {
                 upgrade_costs_real,
                 get_buyable_cost,
                 buy_buyable,
-                get_write_effect
+                get_write_effect,
+                tab_req,
+                add_first_effect,
+                add_second_effect
             }
         }
     }

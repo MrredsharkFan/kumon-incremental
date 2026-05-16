@@ -9,6 +9,11 @@
 
     * {
         font-family: MonospaceTypewriter;
+        border-radius: 10px;
+    }
+
+    .tab_thing {
+        left: 1%;width: 98%; height: 60%; position: fixed; top: 310px; text-align: center;
     }
 </style>
 
@@ -24,10 +29,14 @@
         <br>{{format(skill_gain())}}/s</span><br>
     <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
         Nothing</button>
+    <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = Math.max(player.upage-1,0)">Previous
+            page</button>
+    <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = player.upage+1">Next page</button>
     <hr>
-    <div id="upg" v-if="player.tab=='main'" style="width: 100%; height: 60%; position: fixed; top: 310px"></div>
 
-    <div v-if="player.tab=='num'" style="left: 1%;width: 98%; height: 60%; position: fixed; top: 310px; text-align: center;">
+    <div id="upg" v-if="player.tab=='main'" class="tab_thing"></div>
+
+    <div v-if="player.tab=='num'" class="tab_thing">
         Your current number counted is {{format(player.number)}}. ({{(get_num_chance()*100).toFixed(3)}}% for successful count)<br>
         x{{format(get_num_effect())}} data<br>
         <button style="width: 20%" onclick="roll_number()">Count! Cooldown: {{((Math.max(0,player.nn-Date.now()))/1000).toFixed(3)}}s</button>
@@ -39,10 +48,21 @@
         </div>
     </div>
 
-    <div id="tab_section" style="position: fixed; left: 2%; width: 96%; height: 10%; top: 89%; background-color: #00000080">
-        <button onclick="player.tab = 'main'">Main</button>
-        <button v-if="hasUpgrade(5)" onclick="player.tab = 'num'">Number</button>
+    <div v-if="player.tab=='add'" class="tab_thing">
+        Your maximum sum is {{format(player.max_sum)}}<br>
+        You're using the addition <span style="color: #226622">{{format(player.sums[0])}}</span>+<span style="color: #662222">{{format(player.sums[1])}}</span><br>
+        <button style="background-color: #aaffaa;" onclick="if(player.sums[0].add(player.sums[1]).add(1).lte(player.max_sum)){player.sums[0]=player.sums[0].add(1)}">Increase Number 1</button>
+        <button style="background-color: #88dd88;" onclick="player.sums[0] = player.sums[0].sub(1).max(0)">Decrease Number 1</button><br>
+        <button style="background-color: #ffaaaa;" onclick="if(player.sums[0].add(player.sums[1]).add(1).lte(player.max_sum)){player.sums[1]=player.sums[1].add(1)}">Increase Number 2</button>
+        <button style="background-color: #dd8888;" onclick="player.sums[1] = player.sums[1].sub(1).max(0)">Decrease Number 2</button>
+        <br>
+        This creates the following effects:<br>
+        x{{format(add_first_effect())}} data<br>
+        Count {{format(add_second_effect())}} at once
+        
+        
     </div>
+    <div id="tab_section" style="position: fixed; left: 2%; width: 96%; height: 10%; top: 89%; background-color: #00000080"></div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -51,8 +71,10 @@
 <script src="baseline/essential.js"></script>
 <script src="baseline/eternity.js"></script>
 <script src="baseline/format.js"></script>
+<script src="tabs.js"></script>
 <script src="general_upgrades.js"></script>
 <script src="num.js"></script>
+<script src="add.js"></script>
 <script src="save.js"></script>
 <script src="buyable_control.js"></script>
 <script src="game.js"></script>

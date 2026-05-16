@@ -1,7 +1,9 @@
 function get_num_chance(L=level) {
     var t = 1 - Math.max(0, 1 - 0.994 ** (L - 200))
-    if (hasUpgrade(12)){t = t/(upgrade_effect(12).toNumber())}
-    return 1-t
+    t = new Decimal(t).pow(-1)
+    if (hasUpgrade(12)) { t = t.times(upgrade_effect(12).toNumber()) }
+    t = t.div(add_second_effect())
+    return new Decimal(1).sub(t.pow(-1)).max(0) //so there are times when counting becomes IMPOSSIBLE LOL
 }
 
 function get_num_effect(n=player.number) {
@@ -24,14 +26,15 @@ function num_cooldown() {
     if (player.upgrades.indexOf(6) != -1) { t = t / 2 }
     if (player.upgrades.indexOf(8) != -1) { t = t / 2.5 }
     if (hasUpgrade(10)) { t = t / upgrade_effect(10).toNumber() }
+    if (hasUpgrade(17)) { t = t / 2 }
     return t
 }
 
 function roll_number() {
     if (Date.now() > player.nn) {
         player.nn = Date.now()+num_cooldown()
-        if (Math.random() < get_num_chance()) {
-            player.number = player.number.add(1)
+        if (new Decimal(Math.random()).lte(get_num_chance())) {
+            player.number = player.number.add(add_second_effect())
         }
         else {
             player.number = new Decimal(0)

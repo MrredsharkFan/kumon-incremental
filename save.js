@@ -11,7 +11,10 @@
             number: new Decimal(0),
             tab: "main",
             nn: Date.now() + 1e4,
-            write: new Decimal(0)
+            write: new Decimal(0),
+            upage: 0,
+            max_sum: new Decimal(0),
+            sums: [new Decimal(0),new Decimal(0)]
         }
     }
 
@@ -22,8 +25,8 @@
     player = initPlayer()
 
     const player_vars_d = ["points", "skill", "number","write"]
-    const player_vars_l = []
-    const player_vars_str = ["level","upgrades","tab","t","nn"]
+    const player_vars_l = ["sums"]
+    const player_vars_str = ["level","upgrades","tab","t","nn","upage"]
 
     function detectNaN() {
         for (var i in player_vars_d) {
