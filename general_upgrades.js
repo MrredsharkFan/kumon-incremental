@@ -36,7 +36,11 @@ upgrade_set(7, 277, "Candies!", "<b>Motivation</b> is stronger based on current 
 )
 upgrade_set(8, 300, "I can count faster!", "*2.5 counting speed.")
 upgrade_set(9, 320, "I can see my progress.", "Data gain is boosted by current exercise #.",
-    function(){return new Decimal(level).sub(200).max(0).pow_base(1.01)}
+    function () {
+        var r = new Decimal(level).sub(200).max(0).pow_base(1.01)
+        if (hasUpgrade(24)){r = r.pow(1.5)}
+        return r
+    }
 )
 upgrade_set(10, 340, "Practise makes perfect.", "Counting speed is boosted based on number.",
     function () {
@@ -72,6 +76,7 @@ upgrade_set(20, 820, "And writing numbers more neatly!", "Writing scaling is fur
 upgrade_set(21, 870, "One plus one...", "Unlocks addition.")
 upgrade_set(22, 900, "'What is this \'book of calculus\' they say?'", "Written numbers add to the boost of the 2nd addition effect, and chance of failure /3.")
 upgrade_set(23, 1000, "Faster addition", "If the second number >5,<b>I am understand bigger numbers better</b> effect ^1.5.")
+upgrade_set(24, 1010, "Reviews.", "<b>I can see my progress</b> effect ^1.5")
 upgrade_set(99, 4659, "I wonder what this is.", "Beat the game, and never come back.")
 
 
