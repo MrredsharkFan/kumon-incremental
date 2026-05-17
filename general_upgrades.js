@@ -124,7 +124,7 @@ upgrade_set(41, 1326, "Let me count in peace!", "\'What is this book of calculus
 upgrade_set(42, 1380, "Let the second number have some use!", "The second adding number boosts challenge essence gain.",
     function(){return player.sums[1].sub(3).max(1).log10().add(1).pow(3)}
 )
-upgrade_set(99, 4659, "I wonder what this is.", "Beat the game, and never come back.")
+upgrade_set(43, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 
 
 

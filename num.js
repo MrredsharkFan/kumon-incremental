@@ -13,6 +13,9 @@ function get_num_effect(n = hasUpgrade(14)?player.best_number:player.number) {
     if (hasUpgrade(11)) { p = p.times(upgrade_effect(11)) }
     if (hasUpgrade(19)) { p = p.times(upgrade_effect(19)) }
     var e = n.add(1).pow(p)
+    if (e.gte("1e300")) {
+        e = e.log10().div(300).add(9).pow(300)
+    }
     return e
 }
 
