@@ -54,6 +54,7 @@
         <span style="color: #226622">{{format(player.sums[0])}}</span> +
         <span style="color: #662222">{{format(player.sums[1])}}</span>
         <span v-if="hasUpgrade(28)">+ <span style="color: #222266">{{format(player.sums[2])}}</span></span>
+        <span v-if="hasUpgrade(36)">- <span style="color: #662266">{{format(player.sums[3])}}</span></span>
         <br>
         <button style="background-color: #aaffaa;" onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[0]=player.sums[0].add(1)}">Increase Number 1</button>
         <button style="background-color: #88dd88;" onclick="player.sums[0] = player.sums[0].sub(1).max(0)">Decrease Number 1</button><br>
@@ -66,13 +67,37 @@
             <button style="background-color: #8888dd;" onclick="player.sums[2] = player.sums[2].sub(1).max(0)">Decrease Number
                 3</button><br>
         </div>
+        <div v-if="hasUpgrade(36)">
+            <button style="background-color: #ffaaff;"
+                onclick="player.sums[3]=player.sums[3].add(1)">Increase
+                Number 4</button>
+            <button style="background-color: #dd88dd;" onclick="if (player.sums[0].gt(0) && player.sums[3].gt(0)){player.sums[3] = player.sums[3].sub(1).max(0); player.sums[0] = player.sums[0].sub(1)}">Decrease Number
+                4 (Requires at least 1 Adder 1)</button><br>
+        </div>
         <br>
         This creates the following effects:<br>
         x{{format(add_first_effect())}} data<br>
         Count {{format(add_second_effect())}} at once<br>
         <div v-if="hasUpgrade(28)">The first & second effects of addition are {{format(add_third_effect(),4)}}x stronger</div>
+        <span v-if="hasUpgrade(36)" style="color: #662222">Root point gain by {{format(add_fourth_effect(),6)}}</span>
         
         
+    </div>
+
+    <div v-if="player.tab=='sub'" class="tab_thing">
+        Remove all your data to enter the subtraction world.<br>
+        Current subtraction level: -{{format(player.sub_level)}}<br>
+        <button style="background-color: #ffff88" onclick="player.sub = !player.sub; player.skill = new Decimal(0)">{{player.sub?"Exit":"Enter"}}</button><br>
+        Reach {{format(sub_req())}} to finish the subtraction.<br>
+        <small>Data gain will be rooted {{format(sub_first_debuff())}}, first & third addition acts like -{{format(sub_second_debuff())}} of them are there</small>
+        <br><br>
+        Effects:<br>
+        x{{format(sub_effect())}} writing speed
+        <div v-if="hasUpgrade(38)">
+            <hr>
+            You currently have ({{format(player.ce)}}) challenge essence. ({{format(ce_gain())}}/s)<br>
+            x{{format(ce_effect())}} point gain
+        </div>
     </div>
 
     <div v-if="player.tab=='set'">
@@ -91,6 +116,7 @@
 <script src="general_upgrades.js"></script>
 <script src="num.js"></script>
 <script src="add.js"></script>
+<script src="sub.js"></script>
 <script src="save.js"></script>
 <script src="buyable_control.js"></script>
 <script src="game.js"></script>

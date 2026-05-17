@@ -22,6 +22,9 @@ function get_level_pt_req(x) {
     else if (x < 1280) {
         return new Decimal(1e150).pow(t.sub(1200).div(200).add(1))
     }
+    else if (x < 1400) {
+        return new Decimal(1e267).pow(t.sub(1280).div(120).add(1))
+    }
     else {
         return new Decimal(Infinity)
     }
@@ -61,7 +64,13 @@ function skill_gain() {
     g = g.times(get_write_effect())
     g = g.times(add_first_effect())
     if (hasUpgrade(31)) { g = g.times(upgrade_effect(31)) }
+    g = g.times(ce_effect())
+
+    if (hasUpgrade(31)){g = g.add(1)}
+    //powers
     if (hasUpgrade(28)) { g = g.pow(1.02) }
+    if (player.sub) { g = g.root(sub_first_debuff()) }
+    g = g.root(add_fourth_effect()) //lol
     return g
 }
 
@@ -81,7 +90,18 @@ function update(dt) {
 
 
     player.max_sum = get_add_total()
-    player.actual_sum = player.sums[0].add(player.sums[1]).add(player.sums[2])
+    player.actual_sum = player.sums[0].add(player.sums[1]).add(player.sums[2]).sub(player.sums[3])
+
+    if (player.sub) {
+        if (hasUpgrade(38)) {
+            player.ce = player.ce.add(ce_gain().times(dt))
+        }
+    }
+    //subtraction stuff
+    if (player.skill.gte(sub_req()) && player.sub) {
+        player.sub = false
+        player.sub_level = player.sub_level.add(1)
+    }
 
 
 }

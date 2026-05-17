@@ -11,7 +11,7 @@ function upgrade_set(id, cost, title, desc, eff="none") {
     upgrade_effects[id] = eff
     var L = id-1
     document.getElementById("upg").innerHTML =
-        document.getElementById("upg").innerHTML + `<button v-if="(player.upage == ${Math.floor(L/15)} && (hasUpgrade(Math.floor(${L+1}/5)*5-1) || ${id<=5}))" :style="{
+        document.getElementById("upg").innerHTML + `<button v-if="(player.upage == ${Math.floor(L/15)} && (hasUpgrade(Math.floor(${L}/5)*5) || ${id<=5}))" :style="{
         backgroundColor: player.upgrades.indexOf(${id})!=-1?'#99ff99':(upgrade_costs_real[${id}]>level?'#999999':'#ffffff')}" style="position: absolute; left: ${(L%15) * 20 % 100}%; top: ${Math.floor((L%15) / 5) * 32}%; width: 18%; height: 30%" onclick="buy_upgrade(${id})">
         ${title}<br><span style="font-size: 75%">${desc}</span><br>Req: ${get_level_text(cost)}<br>{{upgrade_effects[${id}]=="none"?"":"Currently: "+format(upgrade_effects[${id}](),3)}}</button>`
 }
@@ -98,11 +98,32 @@ upgrade_set(31, 1170, "Dynamic connections", "Data boosts itself.",
 upgrade_set(32, 1200, "Welcome to the main sequence!", "You automatically write 0.5 numbers/s, and disable buying numbers manually. Its effect is softcapped after 1.00 Dc.<br><i>You should feel accomplished.</i>",
     function () {
         var t = new Decimal(0.5)
-        if (hasUpgrade(33)){t = t.times(upgrade_effect(18))}
+        if (hasUpgrade(33)) { t = t.times(upgrade_effect(18)) }
+        if (hasUpgrade(36)) { t = t.times(4) }
+        if (hasUpgrade(37)) { t = t.times(2) }
+        if (hasUpgrade(38)) { t = t.times(2) }
+        t = t.times(sub_effect())
         return t
     }
 )
 upgrade_set(33, 1250, "Counting helps me write faster!", "<b>Incoporating writing into counting</b> now boosts number gain.")
+upgrade_set(34, 1280, "One minus one...", "Unlocks subtraction.")
+upgrade_set(35, 1281, "&square; - 1=1", "Subtraction level directly increases maximum sum.")
+upgrade_set(36, 1285, "This subtraction thing is kind of boring...", "Unlocks subtraction again, and x4 written numbers.")
+upgrade_set(37, 1290, "Why does subtraction feel harder than usual?", "Current level reduces subtraction requirement, and x2 written numbers.",
+    function(){return new Decimal(level).sub(500).max(0).pow_base(1.07)}
+)
+upgrade_set(38, 1300, "There're so many new things to challenge in Mathematics!", "Unlocks challenge essence, and x2 written numbers.")
+upgrade_set(39, 1315, "Those challenges seem enjoyable.", "Challenge essence reduces the root base for the subtraction in addition.",
+    function () { return player.ce.div(100).add(1).log10().add(1).log10().add(1) }
+)
+upgrade_set(40, 1325, "Subtraction is just addition... in reverse", "Subtraction's first effect is exponentiated based on current maximum sum.",
+    function () { return get_add_total().max(1).div(50).add(1).max(1).pow(0.5)}
+)
+upgrade_set(41, 1326, "Let me count in peace!", "\'What is this book of calculus they say\' 's first effect is nullified.")
+upgrade_set(42, 1380, "Let the second number have some use!", "The second adding number boosts challenge essence gain.",
+    function(){return player.sums[1].sub(3).max(1).log10().add(1).pow(3)}
+)
 upgrade_set(99, 4659, "I wonder what this is.", "Beat the game, and never come back.")
 
 

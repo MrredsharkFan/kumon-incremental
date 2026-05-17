@@ -9,4 +9,5 @@ function add_tab(name, req_f,tname=name) {
 add_tab("main", function(){return true}, "Main")
 add_tab("num", function () { return hasUpgrade(5) }, "Numbers")
 add_tab("add", function () { return hasUpgrade(21) }, "Addition")
+add_tab("sub", function () { return hasUpgrade(34) }, "Subtraction")
 add_tab("set", function () { return true }, "Settings")

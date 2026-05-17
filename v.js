@@ -27,13 +27,24 @@ function loadVue() {
                 roll_number,
                 hasUpgrade,
                 upgrade_costs_real,
+
                 get_buyable_cost,
                 buy_buyable,
                 get_write_effect,
                 tab_req,
+
                 add_first_effect,
                 add_second_effect,
-                add_third_effect
+                add_third_effect,
+                add_fourth_effect,
+
+                sub_first_debuff,
+                sub_second_debuff,
+                sub_req,
+                sub_effect,
+                
+                ce_gain,
+                ce_effect
             }
         }
     }
