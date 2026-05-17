@@ -14,8 +14,9 @@
             write: new Decimal(0),
             upage: 0,
             max_sum: new Decimal(0),
-            sums: [new Decimal(0), new Decimal(0)],
-            best_number: new Decimal(0) //embarressing that i put this this late into the list...
+            sums: [new Decimal(0), new Decimal(0), new Decimal(0)],
+            best_number: new Decimal(0), //embarressing that i put this this late into the list...
+            actual_sum: new Decimal(0)
         }
     }
 

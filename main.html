@@ -44,21 +44,33 @@
            <br><hr>
             You have written {{format(player.write)}} numbers.<br>
             x {{format(get_write_effect())}} data.<br>
-            <button style="width: 20%" onclick="buy_buyable('write',player.write)">Learn how to write the next number.<br>Cost: {{format(get_buyable_cost("write",player.write))}} data</button>
+            <button v-if="!hasUpgrade(32)" style="width: 20%" onclick="buy_buyable('write',player.write)">Learn how to write the next number.<br>Cost: {{format(get_buyable_cost("write",player.write))}} data</button>
         </div>
     </div>
 
     <div v-if="player.tab=='add'" class="tab_thing">
         Your maximum sum is {{format(player.max_sum)}}<br>
-        You're using the addition <span style="color: #226622">{{format(player.sums[0])}}</span>+<span style="color: #662222">{{format(player.sums[1])}}</span><br>
-        <button style="background-color: #aaffaa;" onclick="if(player.sums[0].add(player.sums[1]).add(1).lte(player.max_sum)){player.sums[0]=player.sums[0].add(1)}">Increase Number 1</button>
+        You're using the addition 
+        <span style="color: #226622">{{format(player.sums[0])}}</span> +
+        <span style="color: #662222">{{format(player.sums[1])}}</span>
+        <span v-if="hasUpgrade(28)">+ <span style="color: #222266">{{format(player.sums[2])}}</span></span>
+        <br>
+        <button style="background-color: #aaffaa;" onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[0]=player.sums[0].add(1)}">Increase Number 1</button>
         <button style="background-color: #88dd88;" onclick="player.sums[0] = player.sums[0].sub(1).max(0)">Decrease Number 1</button><br>
-        <button style="background-color: #ffaaaa;" onclick="if(player.sums[0].add(player.sums[1]).add(1).lte(player.max_sum)){player.sums[1]=player.sums[1].add(1)}">Increase Number 2</button>
-        <button style="background-color: #dd8888;" onclick="player.sums[1] = player.sums[1].sub(1).max(0)">Decrease Number 2</button>
+        <button style="background-color: #ffaaaa;" onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[1]=player.sums[1].add(1)}">Increase Number 2</button>
+        <button style="background-color: #dd8888;" onclick="player.sums[1] = player.sums[1].sub(1).max(0)">Decrease Number 2</button><br>
+        <div v-if="hasUpgrade(28)">
+            <button style="background-color: #aaaaff;"
+                onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[2]=player.sums[2].add(1)}">Increase
+                Number 3</button>
+            <button style="background-color: #8888dd;" onclick="player.sums[2] = player.sums[2].sub(1).max(0)">Decrease Number
+                3</button><br>
+        </div>
         <br>
         This creates the following effects:<br>
         x{{format(add_first_effect())}} data<br>
-        Count {{format(add_second_effect())}} at once
+        Count {{format(add_second_effect())}} at once<br>
+        <div v-if="hasUpgrade(28)">The first & second effects of addition are {{format(add_third_effect(),4)}}x stronger</div>
         
         
     </div>

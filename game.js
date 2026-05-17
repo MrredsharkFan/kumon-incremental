@@ -19,6 +19,9 @@ function get_level_pt_req(x) {
     else if (x < 1200) {
         return new Decimal(1e75).pow(t.sub(1000).div(200).add(1))
     }
+    else if (x < 1280) {
+        return new Decimal(1e150).pow(t.sub(1200).div(200).add(1))
+    }
     else {
         return new Decimal(Infinity)
     }
@@ -43,9 +46,6 @@ function percent(x=player.skill, l=level) {
     return x.sub(L1).div(L1.sub(L2)).times(100)
 }
 
-for (var i = 870; i < 1001; i++) {
-    console.log(i, format(get_level_pt_req(i)))
-}
 
 level = 0
 
@@ -60,6 +60,8 @@ function skill_gain() {
     if (hasUpgrade(9)) { g = g.times(upgrade_effect(9)) }
     g = g.times(get_write_effect())
     g = g.times(add_first_effect())
+    if (hasUpgrade(31)) { g = g.times(upgrade_effect(31)) }
+    if (hasUpgrade(28)) { g = g.pow(1.02) }
     return g
 }
 
@@ -72,8 +74,16 @@ function update(dt) {
     document.getElementById("prog").value = Number(percent(player.skill, level).times(-1))
     //the player, dt = delta time    
     player.skill = player.skill.add(skill_gain().times(dt))
+    if (hasUpgrade(32)) {
+        player.write = player.write.add(upgrade_effect(32).times(dt))
+    }
+
+
 
     player.max_sum = get_add_total()
+    player.actual_sum = player.sums[0].add(player.sums[1]).add(player.sums[2])
+
+
 }
 
 ct = Date.now()

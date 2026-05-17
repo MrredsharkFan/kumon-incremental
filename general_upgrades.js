@@ -27,7 +27,11 @@ function buy_upgrade(id) {
 upgrade_set(1, 10, "Grasp","Data *2<br><i><small>Just to be reminded that, the complexity of the game ramps up as you play, but it starts rather simple and boring.<br>Developer options may be added soon.</small></i>")
 upgrade_set(2, 33, "Think","Data *2")
 upgrade_set(3, 67, "Motivation","Exercises are done quicker based on your current progress on it.",
-    function () { return new Decimal(percent(player.skill, level)).times(-1).div(100).add(2).pow(2).pow(hasUpgrade(7)?upgrade_effects[7]():1) })
+    function () {
+        var t = percent(player.skill, level)
+        if (hasUpgrade(27)){t = t.min(-50)}
+        return new Decimal(t).times(-1).div(100).add(2).pow(2).pow(hasUpgrade(7) ? upgrade_effects[7]() : 1)
+    })
 upgrade_set(4, 150, "Repetition","Data *2")
 upgrade_set(5, 200, "Let's count!", "Unlocks a new feature, also *4 Data.")
 upgrade_set(6, 250, "This is an index finger!", "*2 counting speed.")
@@ -61,7 +65,10 @@ upgrade_set(17, 630, "Write better, count better.", "Chance of failure when coun
     function(){return player.write.add(1).log10().add(1)}
 )
 upgrade_set(18, 670, "Incoporating writing into counting!", "Current number counted decreases the scaling of writing.",
-    function(){return player.number.div(200).add(1).log10().add(1)}
+    function () {
+        var t = hasUpgrade(26)?player.best_number:player.number
+        return t.div(200).add(1).log10().add(1)
+    }
 )
 upgrade_set(19, 750, "I am understanding bigger numbers better!", "Current number counted's effect is boosted by written numbers.",
     function () {
@@ -75,8 +82,27 @@ upgrade_set(20, 820, "And writing numbers more neatly!", "Writing scaling is fur
 )
 upgrade_set(21, 870, "One plus one...", "Unlocks addition.")
 upgrade_set(22, 900, "'What is this \'book of calculus\' they say?'", "Written numbers add to the boost of the 2nd addition effect, and chance of failure /3.")
-upgrade_set(23, 1000, "Faster addition", "If the second number >5,<b>I am understand bigger numbers better</b> effect ^1.5.")
-upgrade_set(24, 1010, "Reviews.", "<b>I can see my progress</b> effect ^1.5")
+upgrade_set(23, 1000, "Faster addition", "If the second number >5,<b>I am understanding bigger numbers better</b> effect ^1.5.<br><small>This also means you've reached level 1,000!</small>")
+upgrade_set(24, 1010, "Reviews.", "I can see my progress</b> effect ^1.5")
+upgrade_set(25, 1024, "Addition table", "Add 3 to the maximum sum.")
+upgrade_set(26, 1044, "Recall", "<b>Incoporating writing into counting</b> is based on best counted.")
+upgrade_set(27, 1060, "Progress chart", "<b>Motivation</b> always acts like at least 50% of the exercise is done.")
+upgrade_set(28, 1088, "I know who I am!", "Data gain ^1.02.")
+upgrade_set(29, 1100, "Adding in my minds!", "Unlocks a third addition.")
+upgrade_set(30, 1120, "Things get easier after I master addition!", "The second addition increases maximum sum.",
+    function(){return player.sums[1].div(4)}
+)
+upgrade_set(31, 1170, "Dynamic connections", "Data boosts itself.",
+    function () { return player.skill.div("1e120").add(1).pow(0.1) }
+)
+upgrade_set(32, 1200, "Welcome to the main sequence!", "You automatically write 0.5 numbers/s, and disable buying numbers manually. Its effect is softcapped after 1.00 Dc.<br><i>You should feel accomplished.</i>",
+    function () {
+        var t = new Decimal(0.5)
+        if (hasUpgrade(33)){t = t.times(upgrade_effect(18))}
+        return t
+    }
+)
+upgrade_set(33, 1250, "Counting helps me write faster!", "<b>Incoporating writing into counting</b> now boosts number gain.")
 upgrade_set(99, 4659, "I wonder what this is.", "Beat the game, and never come back.")
 
 

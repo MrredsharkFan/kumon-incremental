@@ -18,6 +18,9 @@ function get_num_effect(n = hasUpgrade(14)?player.best_number:player.number) {
 
 function get_write_effect(n = player.write) {
     var e = n.add(1).pow(0.8).sub(1).pow_base(2)
+    if (e.gte("1e33")) {
+        e = e.log(10).div(33).pow(25).times(1e33)
+    }
     return e
 }
 

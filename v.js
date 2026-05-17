@@ -32,7 +32,8 @@ function loadVue() {
                 get_write_effect,
                 tab_req,
                 add_first_effect,
-                add_second_effect
+                add_second_effect,
+                add_third_effect
             }
         }
     }
