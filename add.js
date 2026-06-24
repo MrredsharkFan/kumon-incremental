@@ -4,6 +4,9 @@ function get_add_total() {
     if (hasUpgrade(25)) { c = c.add(3) }
     if (hasUpgrade(30)) { c = c.add(upgrade_effect(30)) }
     if (hasUpgrade(35)) { c = c.add(player.sub_level) }
+    if (hasUpgrade(47)) { c = c.times(2).max(sub_second_debuff().times(3).add(1)) }
+    if (hasUpgrade(48)) { c = c.add(player.sums[3].times(3)) }
+    if (hasUpgrade(49)) { c = c.times(upgrade_effect(49)) }
     return c
 }
 
@@ -31,6 +34,7 @@ function add_third_effect() {
 
 function add_fourth_effect() {
     var t = player.sums[3]
-    if (hasUpgrade(39)){t = t.div(upgrade_effect(39))}
+    if (hasUpgrade(39)) { t = t.div(upgrade_effect(39)) }
+    if (hasUpgrade(51)){t = t.div(upgrade_effect(51))}
     return t.pow(1.25).pow_base(1.005)
 }

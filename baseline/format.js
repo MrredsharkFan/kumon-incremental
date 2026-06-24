@@ -83,7 +83,7 @@ function format(num, prec = 2, small = true, no = "S:1e3003", comma = 6) {
     }
 }
 
-function format_time(s, prec) {
+function format_time(s, prec=3) {
     s = new Decimal(s)
     if (s.lt(60)) { return `${format(s, prec)}s` }
     if (s.lt(60 * 60)) { return `${format(s.div(60).floor(), 0)}min ${format_time(s.mod(60))}` }

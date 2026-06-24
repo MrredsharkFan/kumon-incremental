@@ -16,6 +16,12 @@ function get_num_effect(n = hasUpgrade(14)?player.best_number:player.number) {
     if (e.gte("1e300")) {
         e = e.log10().div(300).add(9).pow(300)
     }
+    if (player.sub & hasUpgrade(44)) {
+        e = e.pow(1.5)
+    }
+    if (hasUpgrade(45)) {
+        e = e.pow(1.1)
+    }
     return e
 }
 

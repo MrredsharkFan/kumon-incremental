@@ -25,7 +25,7 @@
         <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
     <hr>
     <span style="display: block; width: 100%; text-align: center;">
-        Data: {{format(player.skill,4)}}  <small><i>({{format(get_level_pt_req(level),4)}} for next)</i></small>
+        Data: {{format(player.skill,4)}}  <small><i><br>{{format(get_level_pt_req(level),4)}} for next | ~{{format_time(skill_gain().div(get_level_pt_req(level)).pow(-1))}}</i></small>
         <br>{{format(skill_gain())}}/s</span><br>
     <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
         Nothing</button>
@@ -71,7 +71,7 @@
             <button style="background-color: #ffaaff;"
                 onclick="player.sums[3]=player.sums[3].add(1)">Increase
                 Number 4</button>
-            <button style="background-color: #dd88dd;" onclick="if (player.sums[0].gt(0) && player.sums[3].gt(0)){player.sums[3] = player.sums[3].sub(1).max(0); player.sums[0] = player.sums[0].sub(1)}">Decrease Number
+            <button style="background-color: #dd88dd;" onclick="if (player.sums[0].gt(0) && player.sums[3].gt(0)){player.sums[3] = player.sums[3].sub(1).max(0); player.sums[0] = player.sums[0].sub(1 + hasUpgrade(47))}">Decrease Number
                 4 (Requires at least 1 Adder 1)</button><br>
         </div>
         <br>

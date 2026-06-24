@@ -102,6 +102,7 @@ upgrade_set(32, 1200, "Welcome to the main sequence!", "You automatically write 
         if (hasUpgrade(36)) { t = t.times(4) }
         if (hasUpgrade(37)) { t = t.times(2) }
         if (hasUpgrade(38)) { t = t.times(2) }
+        if (hasUpgrade(46)) { t = t.times(upgrade_effect(46)) }
         t = t.times(sub_effect())
         return t
     }
@@ -124,7 +125,26 @@ upgrade_set(41, 1326, "Let me count in peace!", "\'What is this book of calculus
 upgrade_set(42, 1380, "Let the second number have some use!", "The second adding number boosts challenge essence gain.",
     function(){return player.sums[1].sub(3).max(1).log10().add(1).pow(3)}
 )
-upgrade_set(43, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
+upgrade_set(43, 1400, "Welcome to B.", "Gain counted numbers/s based on written numbers.",
+    function () { return player.write.pow(0.75).div(10) }
+)
+upgrade_set(44, 1405, "6 + 9 &rarr; (6-1) + 10", "Counted number effect ^1.5 in subtraction.")
+upgrade_set(45, 1410, "6 + 11 - 1", "Counted number effect ^1.1")
+upgrade_set(46, 1415, "Calculator? Naw", "Written number gain is boosted based on challenge essence.",
+    function(){return player.ce.add(1).pow(0.25)}
+)
+upgrade_set(47, 1420, "Hey Mom, I want a burger! How much will it cost for a burger and a fry? Would you calculate that for me?", "Sum 1,2,3 are all set to your total sum/3, and total sum *2")
+upgrade_set(48, 1470, "What is the x in instagram...?", "Number 4 increases base total sum by 3 each.")
+upgrade_set(49, 1493, "I think I'm <i>really</i> proficient in addition!", "Maximum sum is boosted based on data.",
+    function(){return player.skill.add(10).log10().sub(990).max(10).log10().pow(0.25)}
+)
+upgrade_set(50, 1555, "Let's zoom through the remainder of this, this is too boring! -Me", "Subtraction effect is stronger based on challenge essence.",
+    function(){return player.ce.add(10).log10().add(1).log10().add(1).pow(0.5)}
+)
+upgrade_set(51, 1580, "And there! What if I try adding multiple things...", "Number 4 nerf is decreased based on written numbers.",
+    function () { return player.write.add(1).log10().add(1).log10().add(1).log10().div(3).add(1) }
+)
+upgrade_set(99, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 
 
 

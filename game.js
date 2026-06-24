@@ -89,6 +89,18 @@ function update(dt) {
     if (hasUpgrade(32)) {
         player.write = player.write.add(upgrade_effect(32).times(dt))
     }
+    if (hasUpgrade(43)) {
+        player.number = player.number.add(upgrade_effect(43).times(dt))
+        if (player.number.gte(player.best_number)) {
+            player.best_number = player.number
+        }
+    }
+
+    if (hasUpgrade(47)) {
+        player.sums[0] = get_add_total().div(3)
+        player.sums[1] = get_add_total().div(3)
+        player.sums[2] = get_add_total().div(3)
+    }
 
 
 

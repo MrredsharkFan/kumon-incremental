@@ -8,6 +8,9 @@ function loadVue() {
                 player,
                 level,
                 format,
+                format_time,
+
+
                 get_cur_level,
                 get_level_name,
                 get_level_pt_req,

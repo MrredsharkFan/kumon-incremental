@@ -18,7 +18,8 @@ function sub_req(l=player.sub_level) {
 function sub_effect(l = player.sub_level) {
     var l = new Decimal(l)
     var q = l.add(1).pow(1.5)
-    if (hasUpgrade(40)){q = q.pow(upgrade_effect(40).max(1))}
+    if (hasUpgrade(40)) { q = q.pow(upgrade_effect(40).max(1)) }
+    if (hasUpgrade(50)){q = q.pow(upgrade_effect(50).max(1))}
     return q
 }
 
