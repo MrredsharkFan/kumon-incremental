@@ -92,3 +92,15 @@ function format_time(s, prec=3) {
     if (s.lt(60 * 60 * 24 * 365 * 1000)) { return `${format(s.div(60 * 60 * 24 * 365).floor(), 0)}yr ${format_time(s.mod(86400 * 365))}` }
     else { return `${format(s.div(60 * 60 * 24 * 365))} years` }
 }
+
+
+
+
+
+
+
+function star(a, b) {
+    var a = new Decimal(a)
+    var b = new Decimal(b)
+    return new Decimal(10).pow(a.log10().pow(b))
+}

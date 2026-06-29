@@ -71,8 +71,13 @@
             <button style="background-color: #ffaaff;"
                 onclick="player.sums[3]=player.sums[3].add(1)">Increase
                 Number 4</button>
-            <button style="background-color: #dd88dd;" onclick="if (player.sums[0].gt(0) && player.sums[3].gt(0)){player.sums[3] = player.sums[3].sub(1).max(0); player.sums[0] = player.sums[0].sub(1 + hasUpgrade(47))}">Decrease Number
-                4 (Requires at least 1 Adder 1)</button><br>
+            <button style="background-color: #dd88dd;" 
+            onclick="if (player.sums[0].gt(0) && player.sums[3].gt(0)){
+                    player.sums[3] = player.sums[3].sub(1).max(0); 
+                    player.sums[0] = hasUpgrade(47)?new Decimal(0):player.sums[0].sub(1)
+                    player.skill = new Decimal(10)}"
+                >Decrease Number
+                4 (Requires at least 1 Adder 1, resets points)</button><br>
         </div>
         <br>
         This creates the following effects:<br>
@@ -100,6 +105,38 @@
         </div>
     </div>
 
+    <div v-if="player.tab=='mul'" class="tab_thing">
+        You have {{format(player.m_ess)}} multiplication essence.<br>+{{format(get_m_ess_gain())}}/question (Base gain)
+        <div style="background-color: #eeeeee; width: 70%; height: 70%; position: absolute; left: 15%; top: 15%; padding: 3px">
+            <span>Solve: <span style="font-size: 3rem">{{player.m_q[0]}} &times; {{player.m_q[1]}}</span></span>
+            <input id="multi_table"><br>
+            <span id="m_gain"></span><hr>
+            <i>Multiplication upgrades:</i><br>
+            <div style="display: flex; flex-direction: row; padding: 10px">
+                <button style="flex:1" onclick="buy_m_buyable(0)">
+                    More multiplication essence!<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[0],0))}} ME
+                    <br>Currently: *{{format(multi_buyable_effect(player.m_buyables[0],0))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(1)">
+                    More points!<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[1],1))}} ME
+                    <br>Currently: ^{{format(multi_buyable_effect(player.m_buyables[1],1))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(2)">
+                    Higher total sum!<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[2],2))}} ME
+                    <br>Currently: *{{format(multi_buyable_effect(player.m_buyables[2],2))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(3)">
+                    Higher multiplications!<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[3],3))}} ME
+                    <br>Currently: +{{multi_buyable_effect(player.m_buyables[3],3)}}
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div v-if="player.tab=='set'">
         <button onclick="import_player()">HARD RESET</button>
     </div>
@@ -117,6 +154,7 @@
 <script src="num.js"></script>
 <script src="add.js"></script>
 <script src="sub.js"></script>
+<script src="multi.js"></script>
 <script src="save.js"></script>
 <script src="buyable_control.js"></script>
 <script src="game.js"></script>

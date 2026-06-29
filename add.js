@@ -7,6 +7,7 @@ function get_add_total() {
     if (hasUpgrade(47)) { c = c.times(2).max(sub_second_debuff().times(3).add(1)) }
     if (hasUpgrade(48)) { c = c.add(player.sums[3].times(3)) }
     if (hasUpgrade(49)) { c = c.times(upgrade_effect(49)) }
+    c = c.times(multi_buyable_effect(player.m_buyables[2],2))
     return c
 }
 

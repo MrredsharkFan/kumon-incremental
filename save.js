@@ -19,7 +19,10 @@
             actual_sum: new Decimal(0),
             sub_level: new Decimal(0),
             sub: false,
-            ce: new Decimal(0)
+            ce: new Decimal(0),
+            m_ess: new Decimal(0),
+            m_q: [0, 0],
+            m_buyables: [new Decimal(0), new Decimal(0), new Decimal(0), new Decimal(0)]
         }
     }
 
@@ -29,9 +32,9 @@
 
     player = initPlayer()
 
-    const player_vars_d = ["points", "skill", "number","write","best_number","sub_level","ce"]
-    const player_vars_l = ["sums"]
-    const player_vars_str = ["level","upgrades","tab","t","nn","upage","sub"]
+    const player_vars_d = ["points", "skill", "number","write","best_number","sub_level","ce","m_ess"]
+    const player_vars_l = ["sums","m_buyables"]
+    const player_vars_str = ["level","upgrades","tab","t","nn","upage","sub","m_q"]
 
     function detectNaN() {
         for (var i in player_vars_d) {

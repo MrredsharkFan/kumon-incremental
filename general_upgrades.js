@@ -36,13 +36,19 @@ upgrade_set(4, 150, "Repetition","Data *2")
 upgrade_set(5, 200, "Let's count!", "Unlocks a new feature, also *4 Data.")
 upgrade_set(6, 250, "This is an index finger!", "*2 counting speed.")
 upgrade_set(7, 277, "Candies!", "<b>Motivation</b> is stronger based on current exercise.",
-    function(){return new Decimal(level).sub(200).max(0).div(100).add(1).pow(0.85)}
+    function () {
+        var x = new Decimal(level).sub(200).max(0).div(100).add(1).pow(0.85)
+        if (hasUpgrade(52)){x = x.pow(1.4)}
+        return x
+    }
 )
 upgrade_set(8, 300, "I can count faster!", "*2.5 counting speed.")
 upgrade_set(9, 320, "I can see my progress.", "Data gain is boosted by current exercise #.",
     function () {
         var r = new Decimal(level).sub(200).max(0).pow_base(1.01)
-        if (hasUpgrade(24)){r = r.pow(1.5)}
+        if (hasUpgrade(24)) { r = r.pow(1.5) }
+        if (hasUpgrade(52)) { r = star(r, 1.25) }
+        if (hasUpgrade(59)) { r = star(r, 1.5) }
         return r
     }
 )
@@ -98,6 +104,7 @@ upgrade_set(31, 1170, "Dynamic connections", "Data boosts itself.",
 upgrade_set(32, 1200, "Welcome to the main sequence!", "You automatically write 0.5 numbers/s, and disable buying numbers manually. Its effect is softcapped after 1.00 Dc.<br><i>You should feel accomplished.</i>",
     function () {
         var t = new Decimal(0.5)
+        if (hasUpgrade(53)) { t = t.add(player.number.add(1).pow(0.25)) }
         if (hasUpgrade(33)) { t = t.times(upgrade_effect(18)) }
         if (hasUpgrade(36)) { t = t.times(4) }
         if (hasUpgrade(37)) { t = t.times(2) }
@@ -143,6 +150,19 @@ upgrade_set(50, 1555, "Let's zoom through the remainder of this, this is too bor
 )
 upgrade_set(51, 1580, "And there! What if I try adding multiple things...", "Number 4 nerf is decreased based on written numbers.",
     function () { return player.write.add(1).log10().add(1).log10().add(1).log10().div(3).add(1) }
+)
+upgrade_set(52, 1600, "The teacher said we are learning something new today! I'm sooo excited!", "<b>Candies</b> effect ^1.4, <b>I can see my progress!</b> effect &star; 1.25<br><i>&star; = raise exponent</i>")
+upgrade_set(53, 1602, "Count while writing... I think that's the best I'll get in counting (smiles)", "Counted numbers<sup>0.25</sup> produce written numbers. (Before multis)")
+upgrade_set(54, 1610, "&times;", "Unlocks multiplication.<br><i>If you are bad at it, QUIT THE GAME until you get good at it. Trust me. We prefer ~0.8s/times table</i>")
+upgrade_set(55, 1618, "&times;4 > &times;3 (x>0)", "The product boosts ME gain at ^0.5.")
+upgrade_set(56, 1630, "&times;5 > &times;3 (x>0)", "The previous upgrade is now ^1.")
+upgrade_set(57, 1650, "&times;11? That's not on the table...", "There is a 20% chance that ONE of the multiplicand / multiplier is much higher, and if that happens, ME gain *10")
+upgrade_set(58, 1660, "This is kind of boring.... I guess that's the point of Kumon-", "Data boosts multiplication essence.",
+    function(){return player.skill.div("1e3600").add(1).log10().div(400).add(1).pow(2)}
+)
+upgrade_set(59, 1690, "I've gone so far that there is something new again!", "<b>I can see my progress</b> effect &star; 1.5.")
+upgrade_set(60, 1695, "New type of multiplication in 5 hours (bursts into laughing) (forgets all the pain)", "Challenge essence boosts multiplication essence.",
+    function(){return player.ce.add(10).log10().sub(14).max(1).pow(3)}
 )
 upgrade_set(99, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 

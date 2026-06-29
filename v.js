@@ -47,7 +47,11 @@ function loadVue() {
                 sub_effect,
                 
                 ce_gain,
-                ce_effect
+                ce_effect,
+
+                get_m_ess_gain,
+                multi_buyable_cost,
+                multi_buyable_effect
             }
         }
     }

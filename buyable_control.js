@@ -18,3 +18,5 @@ function buy_buyable(name, amt) {
         }
     }
 }
+
+//faah i will never use this again LOL

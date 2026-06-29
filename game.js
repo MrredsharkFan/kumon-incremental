@@ -28,6 +28,15 @@ function get_level_pt_req(x) {
     else if (x < 1600) {
         return new Decimal("1e573").pow(t.sub(1400).div(200).add(1).pow(1.5))
     }
+    else if (x < 1610) {
+        return new Decimal("1e1620").times(new Decimal(1e10).pow(t.sub(1600)))
+    }
+    else if (x < 1650) {
+        return new Decimal("1e2000").pow(t.sub(1610).div(190).add(1).pow(2))
+    }
+    else if (x < 1710) {
+        return new Decimal("1e3000").pow(t.sub(1650).div(90).add(1).pow(2.5))
+    }
     else {
         return new Decimal(Infinity)
     }
@@ -46,9 +55,14 @@ function get_cur_level(x) {
     return o_level
 }
 
-function percent(x=player.skill, l=level) {
+function percent(x = player.skill, l = level) {
     var L1 = get_level_pt_req(l - 1)
     var L2 = get_level_pt_req(l)
+    if (player.skill.gte("1e1000")) {
+        L1 = L1.log10()
+        L2 = L2.log10()
+        var x = x.log10()
+    }
     return x.sub(L1).div(L1.sub(L2)).times(100)
 }
 
@@ -72,6 +86,7 @@ function skill_gain() {
     if (hasUpgrade(31)){g = g.add(1)}
     //powers
     if (hasUpgrade(28)) { g = g.pow(1.02) }
+    g = g.pow(multi_buyable_effect(player.m_buyables[1],1))
     if (player.sub) { g = g.root(sub_first_debuff()) }
     g = g.root(add_fourth_effect()) //lol
     return g
@@ -118,8 +133,12 @@ function update(dt) {
         player.sub_level = player.sub_level.add(1)
     }
 
+    //multiplication logic here instead... lol
+    multi_logic()
 
 }
+
+gen_new_multi()
 
 ct = Date.now()
 let loop = setInterval(function () {
