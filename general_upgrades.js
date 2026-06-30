@@ -13,7 +13,7 @@ function upgrade_set(id, cost, title, desc, eff="none") {
     document.getElementById("upg").innerHTML =
         document.getElementById("upg").innerHTML + `<button v-if="(player.upage == ${Math.floor(L/15)} && (hasUpgrade(Math.floor(${L}/5)*5) || ${id<=5}))" :style="{
         backgroundColor: player.upgrades.indexOf(${id})!=-1?'#99ff99':(upgrade_costs_real[${id}]>level?'#999999':'#ffffff')}" onclick="buy_upgrade(${id})">
-        ${title}<br><span style="font-size: 75%">${desc}</span><br>Req: ${get_level_text(cost)}<br>{{upgrade_effects[${id}]=="none"?"":"Currently: "+format(upgrade_effects[${id}](),3)}}</button>`
+        ${title}<br><span style="font-size: 75%">${desc}</span><br>Req: ${get_level_text(cost)[1]}<br>{{upgrade_effects[${id}]=="none"?"":"Currently: "+format(upgrade_effects[${id}](),3)}}</button>`
 }
 
 function buy_upgrade(id) {

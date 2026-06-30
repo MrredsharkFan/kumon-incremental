@@ -104,6 +104,7 @@ function skill_gain() {
 function update(dt) {
     player.t = player.t+1
     level = get_cur_level(player.skill)
+    document.getElementById("bruh").style.backgroundColor = get_color(app.level)
     if (typeof app !== "undefined" && app) { //note: so i dont need the "()" in typeof huh
         app.level = level
     }

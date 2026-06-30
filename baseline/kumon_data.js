@@ -477,7 +477,7 @@ function get_level_text(lvl) {
         if (kumon_level_diff.indexOf(n + 1) != -1) { var d = Number(kumon_level_diff[kumon_level_diff.indexOf(n+1) + 1]) } else { var d = 20 };
         d = d*10
         if (c <= d-1) {
-            return `${kumon_level_name[n]} ${Math.floor(c)+1}${"abcd"[Math.floor((lvl%1)*4)]}`
+            return [n,`${kumon_level_name[n]} ${Math.floor(c)+1}`]
         }
         else {
             c = c - d
@@ -489,4 +489,38 @@ function get_level_text(lvl) {
 
 function get_level_name(lvl) {
     return kumon_data[(lvl-lvl%10)/10]
+}
+
+const colors = [
+    "#bbbbbb", //ZII
+    "#999999", //ZI
+    "#ffcccc", //6A
+    "#ffbbbb", //5A
+    "#ffaaaa", //4A
+    "#ccffff", //3A
+    "#bbffff", //2A
+    "#ddffdd", //A
+    "#bbffbb", //B
+    "#ffffdd", //C
+    "#ffffbb", //D
+    "#ffff99", //E
+    "#ffff66", //F
+    "#ffaa77", //G
+    "#ff8866", //H
+    "#ff6655", //I
+    "#ee99ee", //J
+    "#cc99ee", //K
+    "#9999ee", //L
+    "#5599ee", //M
+    "#0099ee", //N
+    "#0066ff", //O
+    "#444499", //X1
+    "#449944", //X2
+    "#884444", //X3
+    "#444444", //X4
+    "#000000", //X5
+]
+
+function get_color(x) {
+    return colors[get_level_text(x)[0]]
 }
