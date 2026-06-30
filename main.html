@@ -13,25 +13,58 @@
     }
 
     .tab_thing {
-        left: 1%;width: 98%; height: 60%; position: fixed; top: 310px; text-align: center;
+        text-align: center;
+        flex: 4
+    }
+
+    #m_b>button {
+        background-color: #ffcc77;
+    }
+    #d_b>button {
+        background-color: #ccff77;
+    }
+
+    #upg>button {
+        flex: 1;
+        font-size: 0.9rem;
+        min-width: 18%;
+    }
+
+    #upg {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px
+    }
+
+    #tab_section {
+        display: flex; 
+        flex-direction: row; 
+        gap: 10px;
+        background-color: #cccccc;
+        padding: 10px
     }
 </style>
 
 <html>
 <div id="app">
-    <a href="https://www.kumon.com/" style="display: inline-flex; background-image: url(logo.svg); background-repeat: no-repeat; width: 205px; height: 50px"></a> Incremental
-    <progress id="prog" style="width: 100%" value="0" max="100"></progress>
-    <span style="text-align: center; display: block; width: 100%">{{get_level_name(level)}} #{{level%10+1}} <small>({{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}})</small>
-        <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
-    <hr>
-    <span style="display: block; width: 100%; text-align: center;">
-        Data: {{format(player.skill,4)}}  <small><i><br>{{format(get_level_pt_req(level),4)}} for next | ~{{format_time(skill_gain().div(get_level_pt_req(level)).pow(-1))}}</i></small>
-        <br>{{format(skill_gain())}}/s</span><br>
-    <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
-        Nothing</button>
-    <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = Math.max(player.upage-1,0)">Previous
-            page</button>
-    <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = player.upage+1">Next page</button>
+    <div style="display: flex; flex-direction: column;">
+        <div style="flex: 1">
+            <a href="https://www.kumon.com/" style="display: inline-flex; background-image: url(logo.svg); background-repeat: no-repeat; width: 205px; height: 50px"></a> Incremental
+            <div id="tab_section"></div>
+            <progress id="prog" style="width: 100%" value="0" max="100"></progress>
+            <span style="text-align: center; display: block; width: 100%">{{get_level_name(level)}} #{{level%10+1}} <small>({{get_level_text(level+Number(percent(player.skill, level).times(-1))/100)}})</small>
+                <br>{{(level/45.9).toFixed(3)}}% finished</span></i>
+            <hr>
+            <span style="display: block; width: 100%; text-align: center;">
+                Data: {{format(player.skill,4)}}  <small><i><br>{{format(get_level_pt_req(level),4)}} for next | ~{{format_time(skill_gain().div(get_real_lvl_req(level)).pow(-1))}}</i></small>
+                <br>{{format(skill_gain())}}/s</span><br>
+            <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
+                Nothing</button>
+            <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = Math.max(player.upage-1,0)">Previous
+                    page</button>
+            <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = player.upage+1">Next page</button>
+        </div>
     <hr>
 
     <div id="upg" v-if="player.tab=='main'" class="tab_thing"></div>
@@ -56,6 +89,7 @@
         <span v-if="hasUpgrade(28)">+ <span style="color: #222266">{{format(player.sums[2])}}</span></span>
         <span v-if="hasUpgrade(36)">- <span style="color: #662266">{{format(player.sums[3])}}</span></span>
         <br>
+        <div v-if="!hasUpgrade(47)">
         <button style="background-color: #aaffaa;" onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[0]=player.sums[0].add(1)}">Increase Number 1</button>
         <button style="background-color: #88dd88;" onclick="player.sums[0] = player.sums[0].sub(1).max(0)">Decrease Number 1</button><br>
         <button style="background-color: #ffaaaa;" onclick="if(player.actual_sum.add(1).lte(player.max_sum)){player.sums[1]=player.sums[1].add(1)}">Increase Number 2</button>
@@ -66,6 +100,7 @@
                 Number 3</button>
             <button style="background-color: #8888dd;" onclick="player.sums[2] = player.sums[2].sub(1).max(0)">Decrease Number
                 3</button><br>
+        </div>
         </div>
         <div v-if="hasUpgrade(36)">
             <button style="background-color: #ffaaff;"
@@ -92,7 +127,7 @@
     <div v-if="player.tab=='sub'" class="tab_thing">
         Remove all your data to enter the subtraction world.<br>
         Current subtraction level: -{{format(player.sub_level)}}<br>
-        <button style="background-color: #ffff88" onclick="player.sub = !player.sub; player.skill = new Decimal(0)">{{player.sub?"Exit":"Enter"}}</button><br>
+        <button style="background-color: #ffff88" onclick="player.sub = !player.sub; player.skill = new Decimal(99999); if(hasUpgrade(61)){player.sums = [new Decimal(player.sub_level.times(3)),new Decimal(player.sub_level.times(3)),new Decimal(player.sub_level.times(3)),player.sums[3]]}">{{player.sub?"Exit":"Enter"}}</button><br>
         Reach {{format(sub_req())}} to finish the subtraction.<br>
         <small>Data gain will be rooted {{format(sub_first_debuff())}}, first & third addition acts like -{{format(sub_second_debuff())}} of them are there</small>
         <br><br>
@@ -105,42 +140,73 @@
         </div>
     </div>
 
-    <div v-if="player.tab=='mul'" class="tab_thing">
-        You have {{format(player.m_ess)}} multiplication essence.<br>+{{format(get_m_ess_gain())}}/question (Base gain)
-        <div style="background-color: #eeeeee; width: 70%; height: 70%; position: absolute; left: 15%; top: 15%; padding: 3px">
-            <span>Solve: <span style="font-size: 3rem">{{player.m_q[0]}} &times; {{player.m_q[1]}}</span></span>
+    <div v-if="player.tab=='mul'" class="tab_thing" style="display: flex; flex-direction: column; gap: 10px">
+        <div style="flex: 1;display: flex; flex-direction: row; gap: 10px;">
+            <div style="flex: 1; background-color: #ffaa55">
+                You have {{format(player.m_ess)}} multiplication essence.<br>
+                +{{format(get_m_ess_gain())}}/question (Base gain)
+            </div>
+            <div style="flex: 1; background-color: #aaff55;" v-if="hasUpgrade(61)">
+                You have {{format(player.d_ess)}} division essence.<br>
+                +{{format(get_d_ess_gain())}}/question (Base gain)
+            </div>
+            </div>
+        <div style="flex: 7;background-color: #eeeeee; padding: 3px">
+            <span>Solve: <span style="font-size: 3rem">{{player.m_q[0]}} {{player.m_q[2]==0?"&times;":"&divide;"}} {{player.m_q[1]}}</span></span>
             <input id="multi_table"><br>
             <span id="m_gain"></span><hr>
-            <i>Multiplication upgrades:</i><br>
-            <div style="display: flex; flex-direction: row; padding: 10px">
+            Multiplication buyables<br>
+            <div style="display: flex; flex-direction: row; padding: 10px" id="m_b">
                 <button style="flex:1" onclick="buy_m_buyable(0)">
-                    More multiplication essence!<br>
+                    &uarr; multiplication essence!<br>
                     Cost: {{format(multi_buyable_cost(player.m_buyables[0],0))}} ME
                     <br>Currently: *{{format(multi_buyable_effect(player.m_buyables[0],0))}}
                 </button>
                 <button style="flex:1" onclick="buy_m_buyable(1)">
-                    More points!<br>
+                    &uarr; points!<br>
                     Cost: {{format(multi_buyable_cost(player.m_buyables[1],1))}} ME
                     <br>Currently: ^{{format(multi_buyable_effect(player.m_buyables[1],1))}}
                 </button>
                 <button style="flex:1" onclick="buy_m_buyable(2)">
-                    Higher total sum!<br>
+                    &uarr; total sum!<br>
                     Cost: {{format(multi_buyable_cost(player.m_buyables[2],2))}} ME
-                    <br>Currently: *{{format(multi_buyable_effect(player.m_buyables[2],2))}}
+                    <br>Currently: *{{format(multi_buyable_effect(player.m_buyables[2],2),4)}} {{player.m_buyables[2].gte(50)?"(Softcapped)":""}}
                 </button>
                 <button style="flex:1" onclick="buy_m_buyable(3)">
-                    Higher multiplications!<br>
+                    &uarr; multiplications!<br>
                     Cost: {{format(multi_buyable_cost(player.m_buyables[3],3))}} ME
                     <br>Currently: +{{multi_buyable_effect(player.m_buyables[3],3)}}
                 </button>
+            </div><br>
+            <div style="display: flex; flex-direction: row; padding: 10px" v-if="hasUpgrade(61)" id="d_b">
+                <button style="flex:1" onclick="buy_m_buyable(4)">
+                    &darr; subtraction data nerf<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[4],4))}} DE
+                    <br>Currently: /{{format(multi_buyable_effect(player.m_buyables[4],4))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(5)">
+                    &darr; nerf of "adder" #4<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[5],5))}} DE
+                    <br>Currently: /{{format(multi_buyable_effect(player.m_buyables[5],5))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(6)">
+                    &darr; exercise requirement<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[6],6))}} DE
+                    <br>Currently: root {{format(multi_buyable_effect(player.m_buyables[6],6))}}
+                </button>
+                <button style="flex:1" onclick="buy_m_buyable(7)" v-if="hasUpgrade(65)">
+                    &darr; multiplication upgrades, division upgrades cost, ME<br>
+                    Cost: {{format(multi_buyable_cost(player.m_buyables[7],7))}} DE
+                    <br>Currently: /{{format(multi_buyable_effect(player.m_buyables[7],7))}}
+                </button>
             </div>
         </div>
+    </div>
     </div>
 
     <div v-if="player.tab=='set'">
         <button onclick="import_player()">HARD RESET</button>
     </div>
-    <div id="tab_section" style="position: fixed; left: 2%; width: 96%; height: 10%; top: 89%; background-color: #00000080"></div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

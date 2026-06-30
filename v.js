@@ -51,7 +51,10 @@ function loadVue() {
 
                 get_m_ess_gain,
                 multi_buyable_cost,
-                multi_buyable_effect
+                multi_buyable_effect,
+
+                get_d_ess_gain,
+                get_real_lvl_req
             }
         }
     }

@@ -12,19 +12,27 @@ function upgrade_set(id, cost, title, desc, eff="none") {
     var L = id-1
     document.getElementById("upg").innerHTML =
         document.getElementById("upg").innerHTML + `<button v-if="(player.upage == ${Math.floor(L/15)} && (hasUpgrade(Math.floor(${L}/5)*5) || ${id<=5}))" :style="{
-        backgroundColor: player.upgrades.indexOf(${id})!=-1?'#99ff99':(upgrade_costs_real[${id}]>level?'#999999':'#ffffff')}" style="position: absolute; left: ${(L%15) * 20 % 100}%; top: ${Math.floor((L%15) / 5) * 32}%; width: 18%; height: 30%" onclick="buy_upgrade(${id})">
+        backgroundColor: player.upgrades.indexOf(${id})!=-1?'#99ff99':(upgrade_costs_real[${id}]>level?'#999999':'#ffffff')}" onclick="buy_upgrade(${id})">
         ${title}<br><span style="font-size: 75%">${desc}</span><br>Req: ${get_level_text(cost)}<br>{{upgrade_effects[${id}]=="none"?"":"Currently: "+format(upgrade_effects[${id}](),3)}}</button>`
 }
 
 function buy_upgrade(id) {
     console.log(level,upgrade_costs_real[id])
     if (new Decimal(level).gte(upgrade_costs_real[id]) && player.upgrades.indexOf(id)==-1) {
-        player.skill = player.skill.sub(get_level_pt_req(upgrade_costs_real[id]-1))
+        player.skill = player.skill.sub(get_real_lvl_req(upgrade_costs_real[id]-1))
         player.upgrades.push(id)
     }
 }
 
-upgrade_set(1, 10, "Grasp","Data *2<br><i><small>Just to be reminded that, the complexity of the game ramps up as you play, but it starts rather simple and boring.<br>Developer options may be added soon.</small></i>")
+upgrade_set(1, 10, "Grasp", "Data *2<br><i><small>Just to be reminded that, the complexity of the game ramps up as you play, but it starts rather simple and boring.<br>Developer options may be added soon.</small></i>",
+    function () {
+        var x = new Decimal(2)
+        if (hasUpgrade(64)) {
+            x = x.pow(upgrade_effect(64))
+        }
+        return x
+    }
+)
 upgrade_set(2, 33, "Think","Data *2")
 upgrade_set(3, 67, "Motivation","Exercises are done quicker based on your current progress on it.",
     function () {
@@ -164,6 +172,22 @@ upgrade_set(59, 1690, "I've gone so far that there is something new again!", "<b
 upgrade_set(60, 1695, "New type of multiplication in 5 hours (bursts into laughing) (forgets all the pain)", "Challenge essence boosts multiplication essence.",
     function(){return player.ce.add(10).log10().sub(14).max(1).pow(3)}
 )
+upgrade_set(61, 1710, "&divide;", "Unlocks division.<br>Also *4 multiplication essence.<br><small>Also fixes the bug where you get a lot of data when you start subtraction. As compensation, the subtraction data nerf is /2.888.</small>")
+upgrade_set(62, 1711, "Just repeated division", "Number of completed exercises past C111 boosts division essence gain.",
+    function(){return new Decimal(level).sub(1710).max(0).pow(0.5).pow_base(2)}
+)
+upgrade_set(63, 1713, "&divide; 2", "ME boosts DE gain.",
+    function () { return player.m_ess.div(1e18).add(1).log10().pow(2).add(1) }
+)
+upgrade_set(64, 1716, "Grasping the arithmetic", "<b>Grasp</b>'s effect is exponentiated based on ME.",
+    function () { return player.m_ess.div(1e21).add(1).log10().pow(2).times(100).add(1) }
+)
+upgrade_set(65, 1718, "Prestige the balance", "Unlocks a new thing in multiplication.")
+upgrade_set(66, 1724, "Well, I don't like that~ Change to a new one", "Autobuy multiplication upgrades 1-3. You're welcome.")
+upgrade_set(67, 1729, "This! is upgrade SIX SEVEN!!!!", "Written number's effect &star; 1.2 AFTER the softcap")
+upgrade_set(68, 1739, "Hysterically laughing at those numbers, are they really fun?", "Gain multiplication essence even after doing a division question, and &times;4 ME.")
+upgrade_set(69, 1750, "\"69 is NOT funny, yaoi\"", "&times;10 ME")
+upgrade_set(70, 1760, "Division expansion", "Division is NOT limited to 9&divide;3 maximum. It shares the same coefficients as normal multiplication (you'll see)")
 upgrade_set(99, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 
 

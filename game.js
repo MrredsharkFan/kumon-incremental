@@ -37,9 +37,18 @@ function get_level_pt_req(x) {
     else if (x < 1710) {
         return new Decimal("1e3000").pow(t.sub(1650).div(90).add(1).pow(2.5))
     }
+    else if (x < 1940) {
+        return new Decimal("1e14000").pow(t.sub(1710).div(90).add(1).pow(3))
+    }
     else {
         return new Decimal(Infinity)
     }
+}
+
+function get_real_lvl_req(x) {
+    var t = get_level_pt_req(x)
+    t = t.add(1).root(multi_buyable_effect(player.m_buyables[6], 6))
+    return t
 }
 
 function get_cur_level(x) {
@@ -47,7 +56,7 @@ function get_cur_level(x) {
     var o_level = 4660
     var step = 4096
     while (step != 0.5) {
-        if (x.lte(get_level_pt_req(o_level - step))) {
+        if (x.lte(get_real_lvl_req(o_level - step))) {
             o_level = o_level - step
         }
         step = step / 2
@@ -56,8 +65,8 @@ function get_cur_level(x) {
 }
 
 function percent(x = player.skill, l = level) {
-    var L1 = get_level_pt_req(l - 1)
-    var L2 = get_level_pt_req(l)
+    var L1 = get_real_lvl_req(l - 1)
+    var L2 = get_real_lvl_req(l)
     if (player.skill.gte("1e1000")) {
         L1 = L1.log10()
         L2 = L2.log10()
@@ -71,7 +80,7 @@ level = 0
 
 function skill_gain() {
     var g = player.points
-    if (hasUpgrade(1)){g = g.times(2)}
+    if (hasUpgrade(1)){g = g.times(upgrade_effect(1))}
     if (hasUpgrade(2)) { g = g.times(2) }
     if (hasUpgrade(3)) { g = g.times(upgrade_effects[3]()) }
     if (hasUpgrade(4)) { g = g.times(2) }
@@ -135,10 +144,9 @@ function update(dt) {
 
     //multiplication logic here instead... lol
     multi_logic()
+    if (hasUpgrade(66)){autobuy_u123()}
 
 }
-
-gen_new_multi()
 
 ct = Date.now()
 let loop = setInterval(function () {

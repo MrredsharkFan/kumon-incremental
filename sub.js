@@ -1,6 +1,9 @@
 function sub_first_debuff(l=player.sub_level) {
     var l = new Decimal(l)
-    return l.pow_base(1.2).times(2)
+    var j = l.pow_base(1.2).times(2)
+    if (hasUpgrade(61)) { j = j.div(2.888) }
+    j = j.div(multi_buyable_effect(player.m_buyables[4],4))
+    return j
 }
 
 function sub_second_debuff(l=player.sub_level) {

@@ -30,6 +30,7 @@ function get_write_effect(n = player.write) {
     if (e.gte("1e33")) {
         e = e.log(10).div(33).pow(25).times(1e33)
     }
+    if (hasUpgrade(67)){e = star(e,1.2)}
     return e
 }
 

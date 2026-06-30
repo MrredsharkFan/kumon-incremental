@@ -36,6 +36,7 @@ function add_third_effect() {
 function add_fourth_effect() {
     var t = player.sums[3]
     if (hasUpgrade(39)) { t = t.div(upgrade_effect(39)) }
-    if (hasUpgrade(51)){t = t.div(upgrade_effect(51))}
+    if (hasUpgrade(51)) { t = t.div(upgrade_effect(51)) }
+    t = t.div(multi_buyable_effect(player.m_buyables[5],5))
     return t.pow(1.25).pow_base(1.005)
 }
