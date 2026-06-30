@@ -60,7 +60,7 @@
             </div>
             <hr>
             <span style="display: block; width: 100%; text-align: center;">
-                Data: {{format(player.skill,4)}}  <small><i><br>{{format(get_level_pt_req(level),4)}} for next</i></small>
+                Data: {{format(player.skill,4)}}<small> / <i>{{format(get_level_pt_req(level),4)}}</i></small>
                 <br>{{format(skill_gain())}}/s</span><br>
             <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
                 Nothing</button>
@@ -144,12 +144,12 @@
     </div>
 
     <div v-if="player.tab=='mul'" class="tab_thing" style="display: flex; flex-direction: column; gap: 10px">
-        <div style="flex: 1;display: flex; flex-direction: row; gap: 10px;">
-            <div style="flex: 1; background-color: #ffaa55">
+        <div style="flex: 1;display: flex; flex-direction: row; gap: 10px">
+            <div style="flex: 1; background-color: #ffaa55; padding: 10px">
                 You have {{format(player.m_ess)}} multiplication essence.<br>
                 +{{format(get_m_ess_gain())}}/question (Base gain)
             </div>
-            <div style="flex: 1; background-color: #aaff55;" v-if="hasUpgrade(61)">
+            <div style="flex: 1; background-color: #aaff55; padding: 10px" v-if="hasUpgrade(61)">
                 You have {{format(player.d_ess)}} division essence.<br>
                 +{{format(get_d_ess_gain())}}/question (Base gain)
             </div>
