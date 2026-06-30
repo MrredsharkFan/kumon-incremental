@@ -47,7 +47,7 @@ function get_level_pt_req(x) {
 
 function get_real_lvl_req(x) {
     var t = get_level_pt_req(x)
-    t = t.add(1).root(multi_buyable_effect(player.m_buyables[6], 6))
+    t = t.add(2).root(multi_buyable_effect(player.m_buyables[6], 6))
     return t
 }
 
