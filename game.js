@@ -1,6 +1,6 @@
 function get_level_pt_req(x) {
     var t = new Decimal(x)
-    if (x < 0) { return new Decimal(-1) }
+    if (x < 0) { return t }
     if (x < 200) {
         return t.div(50).add(1).pow(new Decimal(3).add(x / 100)).add(t.div(10).add(1).pow(2).sub(1).times(4))
     }
@@ -47,7 +47,7 @@ function get_level_pt_req(x) {
 
 function get_real_lvl_req(x) {
     var t = get_level_pt_req(x)
-    t = t.add(2).root(multi_buyable_effect(player.m_buyables[6], 6))
+    t = t.root(multi_buyable_effect(player.m_buyables[6], 6))
     return t
 }
 
