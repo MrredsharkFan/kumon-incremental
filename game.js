@@ -101,6 +101,10 @@ function skill_gain() {
     return g
 }
 
+function skill_relative() {
+    return skill_gain().div(player.skill.add(1)).add(1)
+}
+
 function update(dt) {
     player.t = player.t+1
     level = get_cur_level(player.skill)

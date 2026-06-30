@@ -61,7 +61,7 @@
             <hr>
             <span style="display: block; width: 100%; text-align: center;">
                 Data: {{format(player.skill,4)}}<small> / <i>{{format(get_level_pt_req(level),4)}}</i></small>
-                <br>{{format(skill_gain())}}/s</span><br>
+                <br>{{skill_relative().gte(1)?`*${format(skill_relative())}/s`:`${format(skill_gain())}/s`}}</span><br>
             <button onclick="if (player.points.eq(0)){player.points = new Decimal(1)}">Start the grind.<br>Cost:
                 Nothing</button>
             <button v-if="hasUpgrade(15) && player.tab=='main'" onclick="player.upage = Math.max(player.upage-1,0)">Previous
