@@ -47,7 +47,7 @@ function get_level_pt_req(x) {
 
 function get_real_lvl_req(x) {
     var t = get_level_pt_req(x)
-    t = t.root(multi_buyable_effect(player.m_buyables[6], 6))
+    if (t.gte(0)) { t = t.root(multi_buyable_effect(player.m_buyables[6], 6)) }
     return t
 }
 
@@ -101,10 +101,12 @@ function skill_gain() {
     return g
 }
 
-function skill_relative() {
-    return skill_gain().div(player.skill.add(1)).add(1)
+function skill_relative(dt) {
+    return skill_gain().times(dt).div(player.skill.add(1)).add(1).root(dt)
 }
 
+
+var spr = new Decimal(0)
 function update(dt) {
     player.t = player.t+1
     level = get_cur_level(player.skill)
@@ -112,7 +114,16 @@ function update(dt) {
     if (typeof app !== "undefined" && app) { //note: so i dont need the "()" in typeof huh
         app.level = level
     }
-    document.getElementById("prog").value = Number(percent(player.skill, level).times(-1))
+    var prog = percent(player.skill, level).times(-1).min(100).max(0)
+    document.getElementById("prog").value = Number(prog)
+
+    spr = skill_relative(dt)
+    if (spr.gte(2)) {
+        document.getElementById("sps").innerHTML = `x${format(spr)}/s`
+    } else {
+        document.getElementById("sps").innerHTML = `+${format(skill_gain())}/s`
+    }
+
     //the player, dt = delta time    
     player.skill = player.skill.add(skill_gain().times(dt))
     if (hasUpgrade(32)) {
@@ -149,7 +160,8 @@ function update(dt) {
 
     //multiplication logic here instead... lol
     multi_logic()
-    if (hasUpgrade(66)){autobuy_u123()}
+    if (hasUpgrade(66)) { autobuy_u123() }
+    click_button(multi_buyable_effect(player.m_buyables[9],9).times(dt))
 
 }
 

@@ -173,21 +173,30 @@ upgrade_set(60, 1695, "New type of multiplication in 5 hours (bursts into laughi
     function(){return player.ce.add(10).log10().sub(14).max(1).pow(3)}
 )
 upgrade_set(61, 1710, "&divide;", "Unlocks division.<br>Also *4 multiplication essence.<br><small>Also fixes the bug where you get a lot of data when you start subtraction. As compensation, the subtraction data nerf is /2.888.</small>")
-upgrade_set(62, 1711, "Just repeated division", "Number of completed exercises past C111 boosts division essence gain.",
+upgrade_set(62, 1711, "More repetition coming, eugh", "Number of completed exercises past C111 boosts division essence gain.",
     function(){return new Decimal(level).sub(1710).max(0).pow(0.5).pow_base(2)}
 )
 upgrade_set(63, 1713, "&divide; 2", "ME boosts DE gain.",
-    function () { return player.m_ess.div(1e18).add(1).log10().pow(2).add(1) }
+    function () { return player.m_ess.div(1e18).add(1).log10().pow(1.5).add(1) }
 )
 upgrade_set(64, 1716, "Grasping the arithmetic", "<b>Grasp</b>'s effect is exponentiated based on ME.",
-    function () { return player.m_ess.div(1e21).add(1).log10().pow(2).times(100).add(1) }
+    function () { return player.m_ess.div(1e21).add(1).log10().pow(2).times(40).add(1) }
 )
 upgrade_set(65, 1718, "Prestige the balance", "Unlocks a new thing in multiplication.")
 upgrade_set(66, 1724, "Well, I don't like that~ Change to a new one", "Autobuy multiplication upgrades 1-3. You're welcome.")
-upgrade_set(67, 1729, "This! is upgrade SIX SEVEN!!!!", "Written number's effect &star; 1.2 AFTER the softcap")
-upgrade_set(68, 1739, "Hysterically laughing at those numbers, are they really fun?", "Gain multiplication essence even after doing a division question, and &times;4 ME.")
-upgrade_set(69, 1750, "\"69 is NOT funny, yaoi\"", "&times;10 ME")
-upgrade_set(70, 1760, "Division expansion", "Division is NOT limited to 9&divide;3 maximum. It shares the same coefficients as normal multiplication (you'll see)")
+upgrade_set(67, 1735, "This! is upgrade SIX SEVEN!!!!", "Written number's effect &star; 1.2 AFTER the softcap")
+upgrade_set(68, 1755, "#68 < #69", "&times;4 ME, and amplify the effect of <b>&times; 11? That's not on the table...</b> by x9.")
+upgrade_set(69, 1767, "Division is repeated subtraction!", "Division essence is boosted based on subtraction level.",
+    function (){return player.sub_level.sub(35).max(0).pow_base(1.5)}
+)
+upgrade_set(70, 1770, "Division expansion", "Unlock remainders, also make division maximum 81&divide;9")
+upgrade_set(71, 1776, "Multiplication <-> division synergy", "DE boosts ME.",
+    function(){return player.d_ess.div(1e9).add(1).log10().times(2).add(1).pow(2)}
+)
+upgrade_set(72, 1780, "Isn't this just a better version of &divide;2?", "Remainder's exponential base is boosted by ME.",
+    function () { return player.m_ess.div(1e36).add(1).log10().add(1).log10().add(1) }
+)
+upgrade_set(73, 1784, "More automation", "Unlocks a new buyable.")
 upgrade_set(99, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 
 

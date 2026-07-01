@@ -27,7 +27,7 @@ function sub_effect(l = player.sub_level) {
 }
 
 function ce_gain() {
-    var v = player.skill.add(1).div(sub_req()).pow(0.025).max(1e-10).times(player.sub_level.pow_base(5))
+    var v = player.skill.min(sub_req()).add(1).div(sub_req()).pow(0.025).max(1e-10).times(player.sub_level.pow_base(5))
     if (hasUpgrade(42)){v = v.times(upgrade_effect(42))}
     return v
 }
