@@ -37,8 +37,11 @@ function get_level_pt_req(x) {
     else if (x < 1710) {
         return new Decimal("1e3000").pow(t.sub(1650).div(90).add(1).pow(2.5))
     }
-    else if (x < 1940) {
+    else if (x < 1930) {
         return new Decimal("1e14000").pow(t.sub(1710).div(90).add(1).pow(3))
+    }
+    else if (x < 1950) {
+        return new Decimal("ee6").pow(t.sub(1930).div(60).add(1).pow(3))
     }
     else {
         return new Decimal(Infinity)

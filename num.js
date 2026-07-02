@@ -22,6 +22,7 @@ function get_num_effect(n = hasUpgrade(14)?player.best_number:player.number) {
     if (hasUpgrade(45)) {
         e = e.pow(1.1)
     }
+    if (hasUpgrade(81)){e = star(e,1.125)}
     return e
 }
 

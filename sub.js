@@ -22,7 +22,8 @@ function sub_effect(l = player.sub_level) {
     var l = new Decimal(l)
     var q = l.add(1).pow(1.5)
     if (hasUpgrade(40)) { q = q.pow(upgrade_effect(40).max(1)) }
-    if (hasUpgrade(50)){q = q.pow(upgrade_effect(50).max(1))}
+    if (hasUpgrade(50)) { q = q.pow(upgrade_effect(50).max(1)) }
+    if (hasUpgrade(79)){q = q.pow(2)}
     return q
 }
 
@@ -33,5 +34,7 @@ function ce_gain() {
 }
 
 function ce_effect() {
-    return player.ce.add(1).pow(player.ce.add(1).log10().pow(0.5))
+    var r = player.ce.add(1).pow(player.ce.add(1).log10().pow(0.5))
+    if (hasUpgrade(80)){r = star(r,1.2)}
+    return r
 }

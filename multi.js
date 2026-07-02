@@ -6,6 +6,8 @@ function get_m_ess_gain() {
     if (hasUpgrade(61)) { b = b.times(4) }
     if (hasUpgrade(68)) { b = b.times(4) }
     if (hasUpgrade(71)) { b = b.times(upgrade_effect(71)) }
+    if (hasUpgrade(75)) { b = b.times(upgrade_effect(75)) }
+    if (hasUpgrade(78)) { b = b.times(upgrade_effect(78)) }
     return b
 }
 
@@ -85,10 +87,13 @@ function multi_buyable_cost(amt, id) {
         return amt.pow_base(2).times(50)
     }
     if (id == 3) {
-        if (amt.eq(5)) {
+        if (amt.eq(5) & !hasUpgrade(74)) {
             return new Decimal(Infinity)
         }
-        return amt.pow(2).pow_base(10).times(150)
+        var sc = new Decimal(2)
+        if (hasUpgrade(76)) { sc = new Decimal(1.6) }
+        if (hasUpgrade(77)) { sc = new Decimal(1.4) }
+        return amt.pow(sc).pow_base(10).times(150)
     }
     if (id == 4) {
         var v = amt.pow(1.25).pow_base(2).times(10)

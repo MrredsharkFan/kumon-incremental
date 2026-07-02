@@ -164,7 +164,7 @@ upgrade_set(53, 1602, "Count while writing... I think that's the best I'll get i
 upgrade_set(54, 1610, "&times;", "Unlocks multiplication.<br><i>If you are bad at it, QUIT THE GAME until you get good at it. Trust me. We prefer ~0.8s/times table</i>")
 upgrade_set(55, 1618, "&times;4 > &times;3 (x>0)", "The product boosts ME gain at ^0.5.")
 upgrade_set(56, 1630, "&times;5 > &times;3 (x>0)", "The previous upgrade is now ^1.")
-upgrade_set(57, 1650, "&times;11? That's not on the table...", "There is a 20% chance that ONE of the multiplicand / multiplier is much higher, and if that happens, ME gain *10")
+upgrade_set(57, 1650, "&times;11? That's not on the table...", "There is a 20% chance that ONE of the multiplicand / multiplier is much higher (over 10), and if that happens, ME gain *10")
 upgrade_set(58, 1660, "This is kind of boring.... I guess that's the point of Kumon-", "Data boosts multiplication essence.",
     function(){return player.skill.div("1e3600").add(1).log10().div(400).add(1).pow(2)}
 )
@@ -197,6 +197,28 @@ upgrade_set(72, 1780, "Isn't this just a better version of &divide;2?", "Remaind
     function () { return player.m_ess.div(1e36).add(1).log10().add(1).log10().add(1) }
 )
 upgrade_set(73, 1784, "More automation", "Unlocks a new buyable.")
+upgrade_set(74, 1820, "I don't think you can do this mentally -instructor", "Uncap \"&uarr; multiplications\"")
+upgrade_set(75, 1870, "I deserve rewards", "If both the factors of the multiplication is equal or greater than 10, &times;10 ME gain.",
+    function () {
+        if (player.m_q[0] >= 10 & player.m_q[1] >= 10) {
+            var p = new Decimal(10)
+            if (hasUpgrade(77)){p = p.pow(upgrade_effect(77))}
+            return p
+        } else {
+            return new Decimal(1)
+        }
+    }
+)
+upgrade_set(76, 1920, "I sense something stupid coming up", "Decrease the scaling of &uarr; multiplications.")
+upgrade_set(77, 1930, "Whatever. This is pure. Morbid. Personal hate towards quotients with >2 digits. REVENGE!", "Decrease the scaling of &uarr; multiplications, again. Also, <b>I deserve rewards</b> is exponentiated based on data.",
+    function(){return player.skill.add(1).log10().sub(160000).div(1000).max(1).add(1).log10().add(1)}
+)
+upgrade_set(78, 1931, "20 exercises of doom", "&uarr; multiplications boost ME gain.",
+    function(){return player.m_buyables[3].sub(10).max(0).pow_base(1.5)}
+)
+upgrade_set(79, 1943, "Well my subtraction speed is improved BECAUSE of division? Cool!", "Subtraction effect ^2.")
+upgrade_set(80, 1947, "Keep subtracting instead", "Challenge essence effect &star; 1.5")
+upgrade_set(81, 1949, "We need to focus on counting! Avoid carelessness", "Counted number effect &star; 1.125")
 upgrade_set(99, 4659, "... GGs?", "<i>The beyond lies expertise that kumon can't ever breach. Its principles forbid its existence.<br>Find the knowledge yourself, will you?</i>")
 
 
